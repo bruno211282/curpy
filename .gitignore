@@ -1,0 +1,4 @@
+*.sqlite3
+.vscode/*
+.pytest_cache/*
+data/__pycache__
