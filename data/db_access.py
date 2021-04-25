@@ -48,7 +48,7 @@ class DbManager:
                 {'title': note.title, 'body': note.body, 'noteid': note.noteid}
             )
 
-    def delete_note(self, note:Note):
+    def delete_note(self, noteid:int):
         with self.db as query:
             query.execute(
                 """
@@ -57,7 +57,7 @@ class DbManager:
                 WHERE
                     noteid = :noteid
                 """,
-                {'noteid': note.noteid}
+                {'noteid': noteid}
             )
 
     def get_note_from_id(self, noteid):

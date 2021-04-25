@@ -1,7 +1,7 @@
 from datetime import datetime
 
 class Note:
-    def __init__(self, noteid=None, title=None, body=None):
+    def __init__(self, noteid:str='', title:str='', body:str=''):
 
         self.noteid = noteid
         self.title = title

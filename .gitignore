@@ -2,3 +2,5 @@
 .vscode/*
 .pytest_cache/*
 data/__pycache__
+view/__pycache__
+test.py
