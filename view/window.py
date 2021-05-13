@@ -1,6 +1,6 @@
 from data.db_access import DbManager
 from data.data_models import Note
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtWidgets
 
 
 class WindowLayout:
@@ -85,7 +85,7 @@ class WindowLayout:
 
 
 
-class WorkingWindow(WindowLayout):
+class WindowController(WindowLayout):
 
     def __init__(self) -> None:
         super().__init__()
