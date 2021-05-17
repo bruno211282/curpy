@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Union
 
 
 class Note:
@@ -7,7 +8,7 @@ class Note:
 
     def __init__(
         self,
-        noteid: str = '',
+        noteid: Union[int, None] = None,
         title: str = '',
         body: str = '',
         author: str = ''
@@ -15,7 +16,7 @@ class Note:
         """Constructor de una Nota.
 
         Args:
-            noteid (str, optional): [El ID de una nota]. Defaults to ''.
+            noteid (int, optional): [El ID de una nota]. Defaults to None.
             title (str, optional): [Titulo para la nota]. Defaults to ''.
             body (str, optional): [El cuerpo de la nota]. Defaults to ''.
             author (str, optional): [El autor de la nota]. Defaults to ''.
@@ -31,23 +32,29 @@ class Note:
         return self.title
 
     def is_note_in_db(self):
-        return True if self.noteid is None else False
+        return False if self.noteid is None else True
+
 
 class User:
     """Representa un modelo de Usuario cargado al sistema.
     """
 
-    def __init__(self, user_name: str):
-        """Constructor de una Usuario.
+    def __init__(
+        self,
+        user_id: Union[int, None] = None,
+        user_name: str = ""
+    ):
+        """Constructor de un Usuario.
 
         Args:
-            noteid (str): [El nombre del usuario].
+            user_id (Union[int, None], optional): ID que asigna la DB al usuario.
+                    Valor por defecto: None.
+            user_name (str, optional): [description]. Nombre del usuario.
+                    Valor por defecto: "".
         """
 
+        self.user_id = user_id
         self.user_name = user_name
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.user_name
-
-    def is_note_in_db(self):
-        return True if self.user_name is None else False
