@@ -1,5 +1,5 @@
 import sqlite3
-from data.data_models import Note
+from data.data_models import Note, User
 
 class DbManager:
     def __init__(self):
@@ -17,6 +17,13 @@ class DbManager:
                     noteid INTEGER PRIMARY KEY,
                     title TEXT NOT NULL,
                     body TEXT
+                    author TEXT
+                )
+                """
+            )
+            query.execute(
+                """CREATE TABLE IF NOT EXISTS users (
+                    user_name TEXT PRIMARY KEY
                 )
                 """
             )
@@ -31,6 +38,18 @@ class DbManager:
                     (:title, :body)
                 """,
                 {'title': note.title, 'body': note.body}
+            )
+
+    def create_user(self, user:User):
+        with self.db as query:
+            query.execute(
+                """
+                INSERT INTO users
+                    (user_name)
+                VALUES
+                    (:user_name)
+                """,
+                {'user_name': user.user_name}
             )
 
     def update_note(self, note:Note):
@@ -96,3 +115,20 @@ class DbManager:
                 body=note[2]) for note in data
         ]
         return notes
+    
+    def get_list_of_users(self):
+        query = self.db.execute(
+            """
+            SELECT
+                user_name
+            FROM
+                users
+            """
+        )
+        data = query.fetchall()
+        users = [
+            User(
+                user_name=user[0]
+            ) for user in data
+        ]
+        return users
