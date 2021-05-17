@@ -116,8 +116,7 @@
      <item row="1" column="2">
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item alignment="Qt::AlignLeft">
-        <widget class="QPushButton" name="btn_new_2">
-         <property name="minimumSize">
+        <widget class="QPushButton" name="btn_new_user">
           <size>
            <width>200</width>
            <height>0</height>
@@ -154,11 +153,11 @@
            </property>
           </widget>
          </item>
-         <item>
+         <item alignment="Qt::AlignRight">
           <widget class="QLineEdit" name="line_title">
            <property name="minimumSize">
             <size>
-             <width>271</width>
+             <width>310</width>
              <height>0</height>
             </size>
            </property>
@@ -182,7 +181,7 @@
           <widget class="QComboBox" name="comboBox">
            <property name="minimumSize">
             <size>
-             <width>316</width>
+             <width>310</width>
              <height>0</height>
             </size>
            </property>
@@ -195,6 +194,19 @@
           </widget>
          </item>
         </layout>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_7">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>10</height>
+          </size>
+         </property>
+        </spacer>
        </item>
        <item>
         <widget class="QPlainTextEdit" name="notes_text"/>
@@ -229,7 +241,7 @@
        <property name="sizeHint" stdset="0">
         <size>
          <width>40</width>
-         <height>20</height>
+         <height>15</height>
         </size>
        </property>
       </spacer>
