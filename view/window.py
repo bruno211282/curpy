@@ -9,10 +9,11 @@
 
 
 from view.new_user_window import NewUserController
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtWidgets
 
 from data.db_access import DbManager
 from data.data_models import Note
+
 
 class WindowLayout:
     def __init__(
@@ -32,7 +33,12 @@ class WindowLayout:
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
         self.gridLayout.setSpacing(3)
         self.gridLayout.setObjectName("gridLayout")
-        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem = QtWidgets.QSpacerItem(
+            40,
+            20,
+            QtWidgets.QSizePolicy.Expanding,
+            QtWidgets.QSizePolicy.Minimum
+        )
         self.gridLayout.addItem(spacerItem, 2, 0, 1, 1)
 
         self.verticalLayout_2 = QtWidgets.QVBoxLayout()
@@ -40,43 +46,66 @@ class WindowLayout:
         self.notes_list = QtWidgets.QListWidget(self.gridLayoutWidget)
         self.notes_list.setObjectName("notes_list")
         self.verticalLayout_2.addWidget(self.notes_list)
-        
-        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+
+        spacerItem1 = QtWidgets.QSpacerItem(
+            40,
+            20,
+            QtWidgets.QSizePolicy.Expanding,
+            QtWidgets.QSizePolicy.Minimum
+        )
         self.verticalLayout_2.addItem(spacerItem1)
-        
+
         self.btn_delete = QtWidgets.QPushButton(self.gridLayoutWidget)
         self.btn_delete.setObjectName("btn_delete")
         self.verticalLayout_2.addWidget(self.btn_delete)
-        
+
         self.gridLayout.addLayout(self.verticalLayout_2, 3, 0, 1, 1)
-        spacerItem2 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem2 = QtWidgets.QSpacerItem(
+            20,
+            40,
+            QtWidgets.QSizePolicy.Minimum,
+            QtWidgets.QSizePolicy.Expanding
+        )
         self.gridLayout.addItem(spacerItem2, 3, 1, 1, 1)
-        
+
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.label_filter = QtWidgets.QLabel(self.gridLayoutWidget)
         self.label_filter.setObjectName("label_filter")
         self.horizontalLayout_2.addWidget(self.label_filter)
-        
-        spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
+
+        spacerItem3 = QtWidgets.QSpacerItem(
+            40,
+            20,
+            QtWidgets.QSizePolicy.Preferred,
+            QtWidgets.QSizePolicy.Minimum
+        )
         self.horizontalLayout_2.addItem(spacerItem3)
-        
+
         self.line_filter = QtWidgets.QLineEdit(self.gridLayoutWidget)
         self.line_filter.setObjectName("line_filter")
         self.horizontalLayout_2.addWidget(self.line_filter)
         self.gridLayout.addLayout(self.horizontalLayout_2, 1, 0, 1, 1)
-        
+
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
         self.btn_new_user = QtWidgets.QPushButton(self.gridLayoutWidget)
         self.btn_new_user.setMinimumSize(QtCore.QSize(200, 0))
         self.btn_new_user.setObjectName("btn_new_user")
-        self.horizontalLayout_3.addWidget(self.btn_new_user, 0, QtCore.Qt.AlignLeft)
+        self.horizontalLayout_3.addWidget(
+            self.btn_new_user,
+            0,
+            QtCore.Qt.AlignLeft
+        )
 
         self.btn_new = QtWidgets.QPushButton(self.gridLayoutWidget)
         self.btn_new.setMinimumSize(QtCore.QSize(200, 0))
         self.btn_new.setObjectName("btn_new")
-        self.horizontalLayout_3.addWidget(self.btn_new, 0, QtCore.Qt.AlignRight)
+        self.horizontalLayout_3.addWidget(
+            self.btn_new,
+            0,
+            QtCore.Qt.AlignRight
+        )
         self.gridLayout.addLayout(self.horizontalLayout_3, 1, 2, 1, 1)
 
         self.verticalLayout = QtWidgets.QVBoxLayout()
@@ -90,35 +119,62 @@ class WindowLayout:
         self.note_title.setMinimumSize(QtCore.QSize(310, 0))
         self.note_title.setPlaceholderText("")
         self.note_title.setObjectName("note_title")
-        self.horizontalLayout_4.addWidget(self.note_title, 0, QtCore.Qt.AlignRight)
+        self.horizontalLayout_4.addWidget(
+            self.note_title,
+            0,
+            QtCore.Qt.AlignRight
+        )
         self.verticalLayout.addLayout(self.horizontalLayout_4)
 
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
         self.label_new_user = QtWidgets.QLabel(self.gridLayoutWidget)
         self.label_new_user.setObjectName("label_new_user")
-        self.horizontalLayout_5.addWidget(self.label_new_user, 0, QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
-        
+        self.horizontalLayout_5.addWidget(
+            self.label_new_user,
+            0,
+            QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter
+        )
+
         self.user_list = QtWidgets.QComboBox(self.gridLayoutWidget)
         self.user_list.setMinimumSize(QtCore.QSize(310, 0))
         self.user_list.setIconSize(QtCore.QSize(16, 16))
         self.user_list.setObjectName("user_list")
-        self.horizontalLayout_5.addWidget(self.user_list, 0, QtCore.Qt.AlignRight|QtCore.Qt.AlignVCenter)
+        self.horizontalLayout_5.addWidget(
+            self.user_list,
+            0,
+            QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter
+        )
         self.verticalLayout.addLayout(self.horizontalLayout_5)
-        spacerItem4 = QtWidgets.QSpacerItem(40, 10, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem4 = QtWidgets.QSpacerItem(
+            40,
+            10,
+            QtWidgets.QSizePolicy.Expanding,
+            QtWidgets.QSizePolicy.Minimum
+        )
         self.verticalLayout.addItem(spacerItem4)
         self.notes_text = QtWidgets.QPlainTextEdit(self.gridLayoutWidget)
         self.notes_text.setObjectName("notes_text")
         self.verticalLayout.addWidget(self.notes_text)
-        spacerItem5 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem5 = QtWidgets.QSpacerItem(
+            40,
+            20,
+            QtWidgets.QSizePolicy.Expanding,
+            QtWidgets.QSizePolicy.Minimum
+        )
         self.verticalLayout.addItem(spacerItem5)
         self.btn_save = QtWidgets.QPushButton(self.gridLayoutWidget)
         self.btn_save.setObjectName("btn_save")
         self.verticalLayout.addWidget(self.btn_save)
         self.gridLayout.addLayout(self.verticalLayout, 3, 2, 1, 1)
-        spacerItem6 = QtWidgets.QSpacerItem(40, 15, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem6 = QtWidgets.QSpacerItem(
+            40,
+            15,
+            QtWidgets.QSizePolicy.Expanding,
+            QtWidgets.QSizePolicy.Minimum
+        )
         self.gridLayout.addItem(spacerItem6, 2, 2, 1, 1)
-        
+
         self.main_window.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(self.main_window)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 913, 20))
@@ -179,13 +235,13 @@ class WindowController(WindowLayout):
             print(f'Updating old note with title: {title}')
             self.note.title = title
             self.note.body = (
-                f'{body} \n Authored by {self.note.author} at {self.note.created_at}.'
+                f'{body} \n Authored by {self.note.author}'
+                + f' at {self.note.created_at}.'
             )
             self.note.author = self.user
             self.dbm.update_note(self.note)
 
         self.update_list()
-
 
     def new_note(self):
         """Al presionar el botón de nueva nota, se limpian los
@@ -209,6 +265,8 @@ class WindowController(WindowLayout):
         self.new_user_win.dialog.show()
 
     def update_list(self):
+        """Actualización de listado de notas en la DB
+        """
         notes = self.dbm.get_list_of_notes()
         self.notes_list.clear()
         for note in notes:
@@ -218,6 +276,8 @@ class WindowController(WindowLayout):
             print(f'Updating List with Note: {note.title}')
 
     def update_user_list(self):
+        """Actualización de listado de usuarios en la DB
+        """
         users = self.dbm.get_list_of_users()
         self.user_list.clear()
         for user in users:
@@ -239,10 +299,8 @@ class WindowController(WindowLayout):
         self.note_title.setText(note.title)
         print(f'Loading Note: {note.title}')
 
-
     def delete_selected_note(self):
         selected = self.notes_list.selectedItems()[0]
         self.dbm.delete_note(int(selected.data(1)))
         print(f'Deletinging Note: {selected.text()}')
         self.update_list()
-

@@ -1,6 +1,7 @@
 import sqlite3
 from data.data_models import Note, User
 
+
 class DbManager:
     def __init__(self):
         self.db = sqlite3.connect('db.sqlite3')
@@ -8,7 +9,6 @@ class DbManager:
 
     def __del__(self):
         self.db.close()
-
 
     def _create_tables(self):
         with self.db as query:
@@ -28,7 +28,10 @@ class DbManager:
                 """
             )
 
-    def create_note(self, note:Note):
+    def create_note(
+        self,
+        note: Note
+    ) -> None:
         with self.db as query:
             query.execute(
                 """
@@ -40,7 +43,10 @@ class DbManager:
                 {'title': note.title, 'body': note.body}
             )
 
-    def create_user(self, user:User):
+    def create_user(
+        self,
+        user: User
+    ) -> None:
         with self.db as query:
             query.execute(
                 """
@@ -52,7 +58,10 @@ class DbManager:
                 {'user_name': user.user_name}
             )
 
-    def update_note(self, note:Note):
+    def update_note(
+        self,
+        note: Note
+    ) -> None:
         with self.db as query:
             query.execute(
                 """
@@ -67,7 +76,10 @@ class DbManager:
                 {'title': note.title, 'body': note.body, 'noteid': note.noteid}
             )
 
-    def delete_note(self, noteid:int):
+    def delete_note(
+        self,
+        noteid: int
+    ) -> None:
         with self.db as query:
             query.execute(
                 """
@@ -79,7 +91,10 @@ class DbManager:
                 {'noteid': noteid}
             )
 
-    def get_note_from_id(self, noteid):
+    def get_note_from_id(
+        self,
+        noteid: int
+    ) -> Note:
         query = self.db.execute(
             """
             SELECT
@@ -98,7 +113,11 @@ class DbManager:
             body=data[1]
         )
 
-    def get_list_of_notes(self):
+    def get_list_of_notes(
+        self
+    ) -> list:
+        """Retorna lista de notas cargadas en la DB
+        """
         query = self.db.execute(
             """
             SELECT
@@ -115,8 +134,12 @@ class DbManager:
                 body=note[2]) for note in data
         ]
         return notes
-    
-    def get_list_of_users(self):
+
+    def get_list_of_users(
+        self
+    ) -> list:
+        """Retorna lista de usuarios cargados en la DB
+        """
         query = self.db.execute(
             """
             SELECT
