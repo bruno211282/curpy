@@ -4,6 +4,11 @@ from PyQt5 import QtCore, QtWidgets
 
 
 class WindowLayout:
+    """Se definen los componentes de la ventana y su ubicacion.
+
+    En la clase se definen todos los componentes de la ventana
+    y como se ubican dentro de la misma.
+    """
 
     def __init__(self) -> None:
 
@@ -109,6 +114,12 @@ class WindowLayout:
 
 
 class WindowController(WindowLayout):
+    """Se definen los metodos de control de la ventana.
+
+    En esta clase, por medio de la herencia se agregan al
+    layout de la ventana los metodos necesarios para el
+    control de la misma.
+    """
 
     def __init__(self) -> None:
         super().__init__()
