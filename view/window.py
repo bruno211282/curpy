@@ -188,16 +188,25 @@ class WindowController(WindowLayout):
 
 
     def new_note(self):
+        """Al presionar el botón de nueva nota, se limpian los
+        campos de título y cuerpo del texto, y se actualizan los
+        usuarios disponibles.
+        """
         print('New note!!')
         self.note = None
+        self.user = None
+        self.user_list.setCurrentText('')
         self.notes_text.setPlainText('')
         self.note_title.setText('')
+        self.update_user_list()
 
     def new_user(self):
+        """Al presionar el botón de nuevo usuario, se presenta
+        la ventana de diálogo para ingresar el nombre.
+        """
         print('New user')
         self.new_user_win = NewUserController()
         self.new_user_win.dialog.show()
-        self.update_user_list()
 
     def update_list(self):
         notes = self.dbm.get_list_of_notes()
@@ -213,7 +222,7 @@ class WindowController(WindowLayout):
         self.user_list.clear()
         for user in users:
             self.user_list.addItem(str(user))
-        print(f'Updating User List')
+        print('Updating User List')
 
     def user_changed(self):
         item = self.user_list.currentText()

@@ -9,12 +9,15 @@
 
 
 import sqlite3
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtWidgets
 
 from data.db_access import DbManager
 from data.data_models import User
 
+
 class Dialog(object):
+    """Ventana de diálogo para ingreso de nombre de nuevo usuario.
+    """
     def __init__(
         self,
     ) -> None:
@@ -24,7 +27,9 @@ class Dialog(object):
         self.buttonBox = QtWidgets.QDialogButtonBox(self.dialog)
         self.buttonBox.setGeometry(QtCore.QRect(30, 160, 341, 32))
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
-        self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
+        self.buttonBox.setStandardButtons(
+            QtWidgets.QDialogButtonBox.Cancel | QtWidgets.QDialogButtonBox.Ok
+        )
         self.buttonBox.setObjectName("buttonBox")
         self.verticalLayoutWidget = QtWidgets.QWidget(self.dialog)
         self.verticalLayoutWidget.setGeometry(QtCore.QRect(20, 40, 361, 31))
@@ -34,23 +39,36 @@ class Dialog(object):
         self.verticalLayout.setObjectName("verticalLayout")
         self.label_new_user = QtWidgets.QLabel(self.verticalLayoutWidget)
         self.label_new_user.setObjectName("label_new_user")
-        self.verticalLayout.addWidget(self.label_new_user, 0, QtCore.Qt.AlignHCenter)
+        self.verticalLayout.addWidget(
+            self.label_new_user,
+            0,
+            QtCore.Qt.AlignHCenter
+        )
         self.verticalLayoutWidget_2 = QtWidgets.QWidget(self.dialog)
         self.verticalLayoutWidget_2.setGeometry(QtCore.QRect(20, 70, 361, 22))
         self.verticalLayoutWidget_2.setObjectName("verticalLayoutWidget_2")
-        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.verticalLayoutWidget_2)
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout(
+            self.verticalLayoutWidget_2
+        )
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
-        
-        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+
+        spacerItem = QtWidgets.QSpacerItem(
+            40,
+            20,
+            QtWidgets.QSizePolicy.Expanding,
+            QtWidgets.QSizePolicy.Minimum
+        )
         self.verticalLayout_2.addItem(spacerItem)
         self.verticalLayoutWidget_3 = QtWidgets.QWidget(self.dialog)
         self.verticalLayoutWidget_3.setGeometry(QtCore.QRect(20, 90, 361, 31))
         self.verticalLayoutWidget_3.setObjectName("verticalLayoutWidget_3")
-        self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.verticalLayoutWidget_3)
+        self.verticalLayout_3 = QtWidgets.QVBoxLayout(
+            self.verticalLayoutWidget_3
+        )
         self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
-        
+
         self.line_new_user = QtWidgets.QLineEdit(self.verticalLayoutWidget_3)
         self.line_new_user.setMinimumSize(QtCore.QSize(271, 0))
         self.line_new_user.setPlaceholderText("")
@@ -62,9 +80,14 @@ class Dialog(object):
         self.dialog.setWindowTitle("Nuevo Usuario")
         self.label_new_user.setText("Ingrese el nombre del nuevo usuario:")
 
-class NewUserController(Dialog):
 
+class NewUserController(Dialog):
+    """Controlador de ventana de diálogo para creación de nuevo usuario.
+    """
     def __init__(self) -> None:
+        """Se crea una instancia del gestor de Db y se establecen las
+        acciones por botón.
+        """
         super().__init__()
 
         self.dbm = DbManager()
@@ -72,17 +95,23 @@ class NewUserController(Dialog):
         self.buttonBox.rejected.connect(self.new_user_cancel)
 
     def new_user_accept(self):
+        """Si se introduce una string como nombre y se oprime
+        aceptar, se guarda el nombre de usuario en la DB.
+        """
         print('Getting info about new user')
         new_user = self.line_new_user.text()
         if new_user != '':
             new_user = User(new_user)
             try:
                 self.dbm.create_user(new_user)
+            # Si el usuario está repetido se aborta la operación
             except sqlite3.IntegrityError:
                 print('User already exists.')
         self.dialog.close()
 
     def new_user_cancel(self):
+        """Si se oprime cancelar, se cierra el diálogo sin guardar.
+        """
         print('New user cancelled.')
         self.dialog.close()
 
