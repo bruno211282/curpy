@@ -14,10 +14,15 @@ class WindowLayout:
         self.gridLayoutWidget = QtWidgets.QWidget(self.centralwidget)
         self.gridLayoutWidget.setGeometry(QtCore.QRect(10, 10, 891, 641))
         self.main_layout = QtWidgets.QGridLayout(self.gridLayoutWidget)
-        self.main_layout.setSizeConstraint(QtWidgets.QLayout.SetNoConstraint)
+        self.main_layout.setSizeConstraint(
+            QtWidgets.QLayout.SizeConstraint.SetMinimumSize
+        )
         self.main_layout.setContentsMargins(0, 0, 0, 0)
-        self.main_layout.setSpacing(3)
-        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.main_layout.setSpacing(2)
+        spacerItem = QtWidgets.QSpacerItem(
+            20, 40, QtWidgets.QSizePolicy.Minimum,
+            QtWidgets.QSizePolicy.Expanding
+        )
         self.main_layout.addItem(spacerItem, 3, 1, 1, 1)
 
         # Titulo de la nota
@@ -25,35 +30,51 @@ class WindowLayout:
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
         self.label_title = QtWidgets.QLabel(self.gridLayoutWidget)
         self.horizontalLayout_4.addWidget(self.label_title)
-        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
+        spacerItem1 = QtWidgets.QSpacerItem(
+            40, 20, QtWidgets.QSizePolicy.Preferred,
+            QtWidgets.QSizePolicy.Minimum
+        )
         self.horizontalLayout_4.addItem(spacerItem1)
         self.note_title = QtWidgets.QLineEdit(self.gridLayoutWidget)
         self.note_title.setPlaceholderText("Título de la Nota")
         self.horizontalLayout_4.addWidget(self.note_title)
         self.verticalLayout.addLayout(self.horizontalLayout_4)
-        spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem2 = QtWidgets.QSpacerItem(
+            40, 20, QtWidgets.QSizePolicy.Expanding,
+            QtWidgets.QSizePolicy.Minimum
+        )
         self.verticalLayout.addItem(spacerItem2)
 
         # Cuerpo de la nota
         self.notes_text = QtWidgets.QPlainTextEdit(self.gridLayoutWidget)
         self.verticalLayout.addWidget(self.notes_text)
-        spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem3 = QtWidgets.QSpacerItem(
+            40, 20, QtWidgets.QSizePolicy.Expanding,
+            QtWidgets.QSizePolicy.Minimum
+        )
         self.verticalLayout.addItem(spacerItem3)
         self.btn_save = QtWidgets.QPushButton(self.gridLayoutWidget)
         self.verticalLayout.addWidget(self.btn_save)
         self.main_layout.addLayout(self.verticalLayout, 3, 2, 1, 1)
-        spacerItem4 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem4 = QtWidgets.QSpacerItem(
+            40, 20, QtWidgets.QSizePolicy.Expanding,
+            QtWidgets.QSizePolicy.Minimum
+        )
         self.main_layout.addItem(spacerItem4, 2, 0, 1, 3)
-
 
         # Filtro de notas
         self.hlayout_filter = QtWidgets.QHBoxLayout()
         self.label_filter = QtWidgets.QLabel(self.gridLayoutWidget)
         self.hlayout_filter.addWidget(self.label_filter)
-        spacerItem5 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
+        spacerItem5 = QtWidgets.QSpacerItem(
+            40, 20, QtWidgets.QSizePolicy.Preferred,
+            QtWidgets.QSizePolicy.Minimum
+        )
         self.hlayout_filter.addItem(spacerItem5)
         self.line_filter = QtWidgets.QLineEdit(self.gridLayoutWidget)
-        self.line_filter.setPlaceholderText("Comience a escribir para filtrar...")
+        self.line_filter.setPlaceholderText(
+            "Comience a escribir para filtrar..."
+        )
         self.hlayout_filter.addWidget(self.line_filter)
         self.main_layout.addLayout(self.hlayout_filter, 1, 0, 1, 1)
 
@@ -67,7 +88,10 @@ class WindowLayout:
         self.vlayout_notes_list = QtWidgets.QVBoxLayout()
         self.notes_list = QtWidgets.QListWidget(self.gridLayoutWidget)
         self.vlayout_notes_list.addWidget(self.notes_list)
-        spacerItem6 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem6 = QtWidgets.QSpacerItem(
+            40, 20, QtWidgets.QSizePolicy.Expanding,
+            QtWidgets.QSizePolicy.Minimum
+        )
         self.vlayout_notes_list.addItem(spacerItem6)
         self.btn_delete = QtWidgets.QPushButton(self.gridLayoutWidget)
         self.vlayout_notes_list.addWidget(self.btn_delete)
@@ -82,7 +106,6 @@ class WindowLayout:
         self.label_filter.setText("Filtrar Notas:")
         self.btn_new.setText("Nueva Nota")
         self.btn_delete.setText("Eliminar Nota Seleccionada")
-
 
 
 class WindowController(WindowLayout):
@@ -119,13 +142,11 @@ class WindowController(WindowLayout):
 
         self.update_list()
 
-
     def new_note(self):
         print('New note!!')
         self.note = None
         self.notes_text.setPlainText('')
         self.note_title.setText('')
-
 
     def update_list(self):
         notes = self.dbm.get_list_of_notes()
@@ -135,7 +156,6 @@ class WindowController(WindowLayout):
             itm.setData(1, note.noteid)
             self.notes_list.addItem(itm)
             print(f'Updating List with Note: {note.title}')
-
 
     def load_selected_note(self):
         selected = self.notes_list.selectedItems()[0]
@@ -147,10 +167,8 @@ class WindowController(WindowLayout):
         self.note_title.setText(note.title)
         print(f'Loading Note: {note.title}')
 
-
     def delete_selected_note(self):
         selected = self.notes_list.selectedItems()[0]
         self.dbm.delete_note(int(selected.data(1)))
         print(f'Deletinging Note: {selected.text()}')
         self.update_list()
-
