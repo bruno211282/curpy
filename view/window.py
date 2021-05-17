@@ -170,11 +170,17 @@ class WindowController(WindowLayout):
                 body=body,
                 author=self.user
             )
+            self.note.body = (
+                f'{body} \nAuthored by {self.note.author} at'
+                + f' {self.note.created_at}.'
+            )
             self.dbm.create_note(self.note)
         else:
             print(f'Updating old note with title: {title}')
             self.note.title = title
-            self.note.body = body
+            self.note.body = (
+                f'{body} \n Authored by {self.note.author} at {self.note.created_at}.'
+            )
             self.note.author = self.user
             self.dbm.update_note(self.note)
 
