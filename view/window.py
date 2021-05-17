@@ -16,9 +16,13 @@ from data.data_models import Note
 
 
 class WindowLayout:
-    def __init__(
-        self
-    ) -> None:
+    """Se definen los componentes de la ventana y su ubicacion.
+
+    En la clase se definen todos los componentes de la ventana
+    y como se ubican dentro de la misma.
+    """
+
+    def __init__(self) -> None:
 
         # Main Window
         self.main_window = QtWidgets.QMainWindow()
@@ -27,6 +31,7 @@ class WindowLayout:
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayoutWidget = QtWidgets.QWidget(self.centralwidget)
         self.gridLayoutWidget.setGeometry(QtCore.QRect(10, 10, 891, 641))
+
         self.gridLayoutWidget.setObjectName("gridLayoutWidget")
         self.gridLayout = QtWidgets.QGridLayout(self.gridLayoutWidget)
         self.gridLayout.setSizeConstraint(QtWidgets.QLayout.SetNoConstraint)
@@ -108,6 +113,7 @@ class WindowLayout:
         )
         self.gridLayout.addLayout(self.horizontalLayout_3, 1, 2, 1, 1)
 
+        # Titulo de la nota
         self.verticalLayout = QtWidgets.QVBoxLayout()
         self.verticalLayout.setObjectName("verticalLayout")
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
@@ -115,6 +121,7 @@ class WindowLayout:
         self.label_title = QtWidgets.QLabel(self.gridLayoutWidget)
         self.label_title.setObjectName("label_title")
         self.horizontalLayout_4.addWidget(self.label_title)
+
         self.note_title = QtWidgets.QLineEdit(self.gridLayoutWidget)
         self.note_title.setMinimumSize(QtCore.QSize(310, 0))
         self.note_title.setPlaceholderText("")
@@ -125,6 +132,12 @@ class WindowLayout:
             QtCore.Qt.AlignRight
         )
         self.verticalLayout.addLayout(self.horizontalLayout_4)
+
+        spacerItem2 = QtWidgets.QSpacerItem(
+            40, 20, QtWidgets.QSizePolicy.Expanding,
+            QtWidgets.QSizePolicy.Minimum
+        )
+        self.verticalLayout.addItem(spacerItem2)
 
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
@@ -156,6 +169,7 @@ class WindowLayout:
         self.notes_text = QtWidgets.QPlainTextEdit(self.gridLayoutWidget)
         self.notes_text.setObjectName("notes_text")
         self.verticalLayout.addWidget(self.notes_text)
+
         spacerItem5 = QtWidgets.QSpacerItem(
             40,
             20,
@@ -163,9 +177,11 @@ class WindowLayout:
             QtWidgets.QSizePolicy.Minimum
         )
         self.verticalLayout.addItem(spacerItem5)
+
         self.btn_save = QtWidgets.QPushButton(self.gridLayoutWidget)
         self.btn_save.setObjectName("btn_save")
         self.verticalLayout.addWidget(self.btn_save)
+
         self.gridLayout.addLayout(self.verticalLayout, 3, 2, 1, 1)
         spacerItem6 = QtWidgets.QSpacerItem(
             40,
@@ -195,8 +211,13 @@ class WindowLayout:
         self.label_new_user.setText("Usuario:")
         self.btn_save.setText("Guardar Nota")
 
-
 class WindowController(WindowLayout):
+    """Se definen los metodos de control de la ventana.
+
+    En esta clase, por medio de la herencia se agregan al
+    layout de la ventana los metodos necesarios para el
+    control de la misma.
+    """
 
     def __init__(self) -> None:
         super().__init__()
