@@ -37,11 +37,15 @@ class DbManager:
             query.execute(
                 """
                 INSERT INTO notes
-                    (title, body)
+                    (title, body, author)
                 VALUES
-                    (:title, :body)
+                    (:title, :body, :author)
                 """,
-                {'title': note.title, 'body': note.body}
+                {
+                    'title': note.title,
+                    'body': note.body,
+                    'author': note.author.user_id
+                }
             )
 
     def create_user(
@@ -144,7 +148,7 @@ class DbManager:
         query = self.db.execute(
             """
             SELECT
-                user_name
+                user_id, user_name
             FROM
                 users
             """
@@ -152,7 +156,8 @@ class DbManager:
         data = query.fetchall()
         users = [
             User(
-                user_name=user[0]
+                user_id=user[0],
+                user_name=user[1]
             ) for user in data
         ]
         return users

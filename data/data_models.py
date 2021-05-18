@@ -2,6 +2,31 @@ from datetime import datetime
 from typing import Union
 
 
+class User:
+    """Representa un modelo de Usuario cargado al sistema.
+    """
+
+    def __init__(
+        self,
+        user_id: Union[int, None] = None,
+        user_name: str = ""
+    ):
+        """Constructor de un Usuario.
+
+        Args:
+            user_id (Union[int, None], optional): ID que asigna la DB al user.
+                    Valor por defecto: None.
+            user_name (str, optional): [description]. Nombre del usuario.
+                    Valor por defecto: "".
+        """
+
+        self.user_id = user_id
+        self.user_name = user_name
+
+    def __str__(self) -> str:
+        return self.user_name
+
+
 class Note:
     """Representa un modelo de nota para mantener su informacion.
     """
@@ -11,7 +36,7 @@ class Note:
         noteid: Union[int, None] = None,
         title: str = '',
         body: str = '',
-        author: str = ''
+        author: Union[User, None] = None
     ):
         """Constructor de una Nota.
 
@@ -35,26 +60,3 @@ class Note:
         return False if self.noteid is None else True
 
 
-class User:
-    """Representa un modelo de Usuario cargado al sistema.
-    """
-
-    def __init__(
-        self,
-        user_id: Union[int, None] = None,
-        user_name: str = ""
-    ):
-        """Constructor de un Usuario.
-
-        Args:
-            user_id (Union[int, None], optional): ID que asigna la DB al usuario.
-                    Valor por defecto: None.
-            user_name (str, optional): [description]. Nombre del usuario.
-                    Valor por defecto: "".
-        """
-
-        self.user_id = user_id
-        self.user_name = user_name
-
-    def __str__(self) -> str:
-        return self.user_name
