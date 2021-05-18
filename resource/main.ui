@@ -117,11 +117,6 @@
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item alignment="Qt::AlignLeft">
         <widget class="QPushButton" name="btn_new_user">
-          <size>
-           <width>200</width>
-           <height>0</height>
-          </size>
-         </property>
          <property name="text">
           <string>Nuevo Usuario</string>
          </property>
