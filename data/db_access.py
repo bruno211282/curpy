@@ -13,19 +13,20 @@ class DbManager:
     def _create_tables(self):
         with self.db as query:
             query.execute(
-                """CREATE TABLE IF NOT EXISTS notes (
-                    noteid INTEGER PRIMARY KEY,
-                    title TEXT NOT NULL,
-                    body TEXT
-                    author TEXT
-                )
                 """
+                CREATE TABLE IF NOT EXISTS users (
+                    user_id INTEGER PRIMARY KEY,
+                    user_name TEXT
+                )"""
             )
             query.execute(
-                """CREATE TABLE IF NOT EXISTS users (
-                    user_name TEXT PRIMARY KEY
-                )
                 """
+                CREATE TABLE IF NOT EXISTS notes (
+                    noteid INTEGER PRIMARY KEY,
+                    title TEXT NOT NULL,
+                    body TEXT,
+                    author TEXT REFERENCES users(user_id) ON DELETE CASCADE
+                )"""
             )
 
     def create_note(
