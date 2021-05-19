@@ -1,5 +1,6 @@
 import sqlite3
-from data.data_models import Note
+from data.data_models import Note, User
+
 
 class DbManager:
     def __init__(self):
@@ -9,31 +10,63 @@ class DbManager:
     def __del__(self):
         self.db.close()
 
-
     def _create_tables(self):
         with self.db as query:
             query.execute(
-                """CREATE TABLE IF NOT EXISTS notes (
+                """
+                CREATE TABLE IF NOT EXISTS users (
+                    user_id INTEGER PRIMARY KEY,
+                    user_name TEXT
+                )"""
+            )
+            query.execute(
+                """
+                CREATE TABLE IF NOT EXISTS notes (
                     noteid INTEGER PRIMARY KEY,
                     title TEXT NOT NULL,
-                    body TEXT
-                )
-                """
+                    body TEXT,
+                    author TEXT REFERENCES users(user_id) ON DELETE CASCADE
+                )"""
             )
 
-    def create_note(self, note:Note):
+    def create_note(
+        self,
+        note: Note
+    ) -> None:
         with self.db as query:
             query.execute(
                 """
                 INSERT INTO notes
-                    (title, body)
+                    (title, body, author)
                 VALUES
-                    (:title, :body)
+                    (:title, :body, :author)
                 """,
-                {'title': note.title, 'body': note.body}
+                {
+                    'title': note.title,
+                    'body': note.body,
+                    'author': note.author.user_id
+                }
             )
 
-    def update_note(self, note:Note):
+    def create_user(
+        self,
+        user: User
+    ) -> None:
+        with self.db as query:
+            query.execute(
+                """
+                INSERT INTO users
+                    (user_name)
+                VALUES
+                    (:user_name)
+                """,
+                {'user_name': user.user_name}
+            )
+
+    def update_note(
+        self,
+        note: Note
+    ) -> None:
         with self.db as query:
             query.execute(
                 """
@@ -48,7 +81,10 @@ class DbManager:
                 {'title': note.title, 'body': note.body, 'noteid': note.noteid}
             )
 
-    def delete_note(self, noteid:int):
+    def delete_note(
+        self,
+        noteid: int
+    ) -> None:
         with self.db as query:
             query.execute(
                 """
@@ -60,7 +96,10 @@ class DbManager:
                 {'noteid': noteid}
             )
 
-    def get_note_from_id(self, noteid):
+    def get_note_from_id(
+        self,
+        noteid: int
+    ) -> Note:
         query = self.db.execute(
             """
             SELECT
@@ -79,7 +118,11 @@ class DbManager:
             body=data[1]
         )
 
-    def get_list_of_notes(self):
+    def get_list_of_notes(
+        self
+    ) -> list:
+        """Retorna lista de notas cargadas en la DB
+        """
         query = self.db.execute(
             """
             SELECT
@@ -96,3 +139,25 @@ class DbManager:
                 body=note[2]) for note in data
         ]
         return notes
+
+    def get_list_of_users(
+        self
+    ) -> list:
+        """Retorna lista de usuarios cargados en la DB
+        """
+        query = self.db.execute(
+            """
+            SELECT
+                user_id, user_name
+            FROM
+                users
+            """
+        )
+        data = query.fetchall()
+        users = [
+            User(
+                user_id=user[0],
+                user_name=user[1]
+            ) for user in data
+        ]
+        return users

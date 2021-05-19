@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>912</width>
-    <height>700</height>
+    <width>913</width>
+    <height>707</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,6 +30,46 @@
      <property name="spacing">
       <number>3</number>
      </property>
+     <item row="2" column="0">
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="3" column="0">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QListView" name="notes_list"/>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btn_delete">
+         <property name="text">
+          <string>Eliminar Nota Seleccionada</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
      <item row="3" column="1">
       <spacer name="verticalSpacer">
        <property name="orientation">
@@ -39,93 +79,6 @@
         <size>
          <width>20</width>
          <height>40</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="3" column="2">
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_4">
-         <item>
-          <widget class="QLabel" name="label_2">
-           <property name="text">
-            <string>Titulo de la Nota:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_5">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeType">
-            <enum>QSizePolicy::Preferred</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="line_title">
-           <property name="placeholderText">
-            <string/>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QPlainTextEdit" name="notes_text"/>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_3">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btn_save">
-         <property name="text">
-          <string>Guardar Nota</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item row="2" column="0" colspan="3">
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
         </size>
        </property>
       </spacer>
@@ -162,8 +115,21 @@
      </item>
      <item row="1" column="2">
       <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item>
+       <item alignment="Qt::AlignLeft">
+        <widget class="QPushButton" name="btn_new_user">
+         <property name="text">
+          <string>Nuevo Usuario</string>
+         </property>
+        </widget>
+       </item>
+       <item alignment="Qt::AlignRight">
         <widget class="QPushButton" name="btn_new">
+         <property name="minimumSize">
+          <size>
+           <width>200</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="text">
           <string>Nueva Nota</string>
          </property>
@@ -171,13 +137,77 @@
        </item>
       </layout>
      </item>
-     <item row="3" column="0">
-      <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item row="3" column="2">
+      <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="QListView" name="notes_list"/>
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>Titulo de la Nota:</string>
+           </property>
+          </widget>
+         </item>
+         <item alignment="Qt::AlignRight">
+          <widget class="QLineEdit" name="line_title">
+           <property name="minimumSize">
+            <size>
+             <width>310</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="placeholderText">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item>
-        <spacer name="horizontalSpacer_4">
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item alignment="Qt::AlignLeft|Qt::AlignVCenter">
+          <widget class="QLabel" name="label_3">
+           <property name="text">
+            <string>Usuario:</string>
+           </property>
+          </widget>
+         </item>
+         <item alignment="Qt::AlignRight|Qt::AlignVCenter">
+          <widget class="QComboBox" name="comboBox">
+           <property name="minimumSize">
+            <size>
+             <width>310</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>16</width>
+             <height>16</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_7">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>10</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPlainTextEdit" name="notes_text"/>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_3">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -190,13 +220,26 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="btn_delete">
+        <widget class="QPushButton" name="btn_save">
          <property name="text">
-          <string>Eliminar Nota Seleccionada</string>
+          <string>Guardar Nota</string>
          </property>
         </widget>
        </item>
       </layout>
+     </item>
+     <item row="2" column="2">
+      <spacer name="horizontalSpacer_5">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>15</height>
+        </size>
+       </property>
+      </spacer>
      </item>
     </layout>
    </widget>
@@ -206,8 +249,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>912</width>
-     <height>21</height>
+     <width>913</width>
+     <height>20</height>
     </rect>
    </property>
   </widget>
