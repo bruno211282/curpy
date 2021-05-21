@@ -1,3 +1,4 @@
+"""Controlador de ventana principal."""
 # -*- coding: utf-8 -*-
 
 # Form implementation generated from reading ui file 'resource/main.ui'
@@ -25,7 +26,7 @@ class WindowLayout:
     """
 
     def __init__(self) -> None:
-
+        """Parámetros y objetos necesarios para ubicación de elementos UI."""
         # Main Window
         self.main_window = QtWidgets.QMainWindow()
         self.main_window.resize(912, 700)
@@ -223,6 +224,7 @@ class WindowController(WindowLayout):
     """
 
     def __init__(self) -> None:
+        """Inicialización de DbManager y elementos de UI."""
         super().__init__()
         self.dbm = DbManager()
 
@@ -244,7 +246,7 @@ class WindowController(WindowLayout):
         self.user_list.currentIndexChanged.connect(self.user_changed)
 
     def save_note(self):
-
+        """Guarda Nota nueva o la actualiza si ya existe en la DB."""
         # Get Values from window
         body = self.notes_text.toPlainText()
         title = self.note_title.text()
@@ -271,7 +273,9 @@ class WindowController(WindowLayout):
         self.update_note_list()
 
     def new_note(self):
-        """Al presionar el botón de nueva nota, se limpian los
+        """Reinicia los elementos de la UI para poder crear una nota nueva.
+
+        Al presionar el botón de nueva nota, se limpian los
         campos de título y cuerpo del texto, y se actualizan los
         usuarios disponibles.
         """
@@ -281,7 +285,9 @@ class WindowController(WindowLayout):
         self.note_title.setText('')
 
     def new_user(self):
-        """Al presionar el botón de nuevo usuario, se presenta
+        """Inicializa una nueva ventana para creación de usuario.
+
+        Al presionar el botón de nuevo usuario, se presenta
         la ventana de diálogo para ingresar el nombre.
         """
         print('New user')
@@ -290,8 +296,7 @@ class WindowController(WindowLayout):
         self.new_user_win.dialog.show()
 
     def update_note_list(self):
-        """Actualización de listado de notas en la DB
-        """
+        """Actualización de listado de notas en la DB."""
         notes = self.dbm.get_list_of_notes()
         self.notes_list.clear()
         for note in notes:
@@ -301,8 +306,7 @@ class WindowController(WindowLayout):
             print(f'Updating List with Note: {note.title}')
 
     def update_user_list(self):
-        """Actualización de listado de usuarios en la DB
-        """
+        """Actualización de listado de usuarios en la DB."""
         users = self.dbm.get_list_of_users()
         self.user_list.clear()
         for index, user in enumerate(users):
@@ -312,12 +316,14 @@ class WindowController(WindowLayout):
         print('Updating User List')
 
     def user_changed(self):
+        """Actualiza el usuario seleccionado dentro del controlador."""
         user_name = self.user_list.currentData(0)
         user_id = self.user_list.currentData(1)
         self.user = User(user_id, user_name)
         print(f'Selected User: {user_name} with id: {user_id}')
 
     def load_selected_note(self):
+        """Carga el contenido y los datos de la nota seleccionada en la UI."""
         selected = self.notes_list.selectedItems()[0]
         note = self.dbm.get_note_from_id(
             selected.data(1)
@@ -328,6 +334,7 @@ class WindowController(WindowLayout):
         print(f'Loading Note: {note.title}')
 
     def delete_selected_note(self):
+        """Elimina de la DB la nota seleccionada."""
         selected = self.notes_list.selectedItems()[0]
         self.dbm.delete_note(int(selected.data(1)))
         print(f'Deletinging Note: {selected.text()}')
