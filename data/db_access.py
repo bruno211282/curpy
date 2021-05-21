@@ -5,7 +5,7 @@ from data.data_models import Note, User
 
 class DbManager:
     """Administrador de Base de Datos SQL.
-    
+
     Métodos:
         + _create_tables()
         + create_note()
@@ -167,7 +167,7 @@ class DbManager:
         self
     ) -> list:
         """Retorna lista de notas cargadas en la DB.
-        
+
         Returns:
             list: Lista de objetos Note almacenadas en la DB.
         """
@@ -192,7 +192,7 @@ class DbManager:
         self
     ) -> list:
         """Retorna lista de usuarios cargados en la DB.
-        
+
         Returns:
             list: Lista de objetos User almacenados en la DB.
         """

@@ -1,5 +1,5 @@
 """Script de inicialización de CurPy."""
-#!/usr/bin/env python
+# !/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 from PyQt5.QtWidgets import QApplication
