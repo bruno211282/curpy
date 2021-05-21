@@ -1,17 +1,17 @@
+"""Modelos de datos para almacenar Notas y Usuarios."""
 from datetime import datetime
 from typing import Union
 
 
 class User:
-    """Representa un modelo de Usuario cargado al sistema.
-    """
+    """Representa un modelo de Usuario cargado al sistema."""
 
     def __init__(
         self,
         user_id: Union[int, None] = None,
         user_name: str = ""
     ):
-        """Constructor de un Usuario.
+        """Método constructor de un Usuario.
 
         Args:
             user_id (Union[int, None], optional): ID que asigna la DB al user.
@@ -19,17 +19,20 @@ class User:
             user_name (str, optional): [description]. Nombre del usuario.
                     Valor por defecto: "".
         """
-
         self.user_id = user_id
         self.user_name = user_name
 
     def __str__(self) -> str:
+        """Devuelve nombre del usuario.
+
+        Returns:
+            str: Nombre del usuario.
+        """
         return self.user_name
 
 
 class Note:
-    """Representa un modelo de nota para mantener su informacion.
-    """
+    """Representa un modelo de nota para mantener su información."""
 
     def __init__(
         self,
@@ -38,7 +41,7 @@ class Note:
         body: str = '',
         author: Union[User, None] = None
     ):
-        """Constructor de una Nota.
+        """Método constructor de una Nota.
 
         Args:
             noteid (int, optional): [El ID de una nota]. Defaults to None.
@@ -46,17 +49,24 @@ class Note:
             body (str, optional): [El cuerpo de la nota]. Defaults to ''.
             author (str, optional): [El autor de la nota]. Defaults to ''.
         """
-
         self.noteid = noteid
         self.title = title
         self.body = body
         self.author = author
         self.created_at = datetime.today()
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """Devuelve el título de la nota.
+
+        Returns:
+            str: Título de la nota.
+        """
         return self.title
 
-    def is_note_in_db(self):
+    def is_note_in_db(self) -> bool:
+        """Indica si la nota tiene asignado un ID de la Base de Datos.
+
+        Returns:
+            bool: True si está guardada.
+        """
         return False if self.noteid is None else True
-
-
