@@ -1,16 +1,33 @@
+"""Administrador de Base de Datos."""
 import sqlite3
 from data.data_models import Note, User
 
 
 class DbManager:
+    """Administrador de Base de Datos SQL.
+    
+    Métodos:
+        + _create_tables()
+        + create_note()
+        + create_user()
+        + update_note()
+        + delete_note()
+        + get_note_from_id()
+        + get_list_of_notes()
+        + get_list_of_users()
+    """
+
     def __init__(self):
+        """Conecta el objeto 'db' con la DB SQL y crea las tablas."""
         self.db = sqlite3.connect('db.sqlite3')
         self._create_tables()
 
     def __del__(self):
+        """Cierra la DB."""
         self.db.close()
 
     def _create_tables(self):
+        """Ejecuta las queries necesarias para crear las tablas requeridas."""
         with self.db as query:
             query.execute(
                 """
@@ -33,6 +50,11 @@ class DbManager:
         self,
         note: Note
     ) -> None:
+        """Ejecuta la Query necesaria para la creación de una nota.
+
+        Args:
+            Note: Objeto instancia del modelo Note.
+        """
         with self.db as query:
             query.execute(
                 """
@@ -52,6 +74,11 @@ class DbManager:
         self,
         user: User
     ) -> None:
+        """Ejecuta la Query necesaria para la creación de un usuario.
+
+        Args:
+            User: Objeto instancia del modelo User.
+        """
         with self.db as query:
             query.execute(
                 """
@@ -67,6 +94,11 @@ class DbManager:
         self,
         note: Note
     ) -> None:
+        """Ejecuta la Query necesaria para actualizar una nota existente.
+
+        Args:
+            Note: Objeto instancia del modelo Note.
+        """
         with self.db as query:
             query.execute(
                 """
@@ -85,6 +117,11 @@ class DbManager:
         self,
         noteid: int
     ) -> None:
+        """Ejecuta la Query necesaria para eliminar una nota existente.
+
+        Args:
+            int: ID de la nota a eliminar.
+        """
         with self.db as query:
             query.execute(
                 """
@@ -100,6 +137,14 @@ class DbManager:
         self,
         noteid: int
     ) -> Note:
+        """Busca una nota en la base de datos y la devuelve.
+
+        Args:
+            int: ID de la nota a obtener.
+
+        Returns:
+            Note: Nota obtenida.
+        """
         query = self.db.execute(
             """
             SELECT
@@ -121,7 +166,10 @@ class DbManager:
     def get_list_of_notes(
         self
     ) -> list:
-        """Retorna lista de notas cargadas en la DB
+        """Retorna lista de notas cargadas en la DB.
+        
+        Returns:
+            list: Lista de objetos Note almacenadas en la DB.
         """
         query = self.db.execute(
             """
@@ -143,7 +191,10 @@ class DbManager:
     def get_list_of_users(
         self
     ) -> list:
-        """Retorna lista de usuarios cargados en la DB
+        """Retorna lista de usuarios cargados en la DB.
+        
+        Returns:
+            list: Lista de objetos User almacenados en la DB.
         """
         query = self.db.execute(
             """

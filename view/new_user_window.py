@@ -1,3 +1,4 @@
+"""Controlador de ventana de creación de usuario."""
 # -*- coding: utf-8 -*-
 
 # Form implementation generated from reading ui file 'resource/new_user.ui'
@@ -15,11 +16,12 @@ from data.data_models import User
 
 
 class Dialog(object):
-    """Ventana de diálogo para ingreso de nombre de nuevo usuario.
-    """
+    """Ventana de diálogo para ingreso de nombre de nuevo usuario."""
+
     def __init__(
         self,
     ) -> None:
+        """Parámetros y objetos necesarios para ubicación de elementos UI."""
         self.dialog = QtWidgets.QDialog()
         self.dialog.setObjectName("Dialog")
         self.dialog.resize(400, 209)
@@ -81,10 +83,12 @@ class Dialog(object):
 
 
 class NewUserController(Dialog):
-    """Controlador de ventana de diálogo para creación de nuevo usuario.
-    """
+    """Controlador de ventana de diálogo para creación de nuevo usuario."""
+
     def __init__(self) -> None:
-        """Se crea una instancia del gestor de Db y se establecen las
+        """Inicialización de administrador de DB y conexión de botones.
+
+        Se crea una instancia del gestor de Db y se establecen las
         acciones por botón.
         """
         super().__init__()
@@ -94,10 +98,13 @@ class NewUserController(Dialog):
         self.buttonBox.rejected.connect(self.new_user_cancel)
 
     def update_user_list(self):
+        """TODO: Actualizar lista de usuarios en DB."""
         pass
 
     def new_user_accept(self):
-        """Si se introduce una string como nombre y se oprime
+        """Acepta y guarda un usuario nuevo en la DB.
+
+        Si se introduce una string como nombre y se oprime
         aceptar, se guarda el nombre de usuario en la DB.
         """
         print('Getting info about new user')
@@ -111,7 +118,9 @@ class NewUserController(Dialog):
         self.dialog.close()
 
     def new_user_cancel(self):
-        """Si se oprime cancelar, se cierra el diálogo sin guardar.
+        """Cierra la ventana de creación de usuario.
+
+        Si se oprime cancelar, se cierra el diálogo sin guardar.
         """
         print('New user cancelled.')
         self.dialog.close()
