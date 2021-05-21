@@ -347,7 +347,18 @@ class WindowController(WindowLayout):
 
     def delete_selected_note(self):
         """Elimina de la DB la nota seleccionada."""
-        selected = self.notes_list.selectedItems()[0]
-        self.dbm.delete_note(int(selected.data(1)))
-        print(f'Deletinging Note: {selected.text()}')
-        self.update_note_list()
+        try:
+            selected = self.notes_list.selectedItems()[0]
+            self.dbm.delete_note(int(selected.data(1)))
+            print(f'Deleting Note: {selected.text()}')
+            self.update_note_list()
+        except IndexError:
+            print('No note selected.')
+            msg = QtWidgets.QMessageBox()
+            msg.setIcon(QtWidgets.QMessageBox.Critical)
+            msg.setText("Ninguna nota seleccionada!")
+            msg.setInformativeText(
+                'Debe seleccionar una nota para eliminar.'
+            )
+            msg.setWindowTitle("ERROR")
+            msg.exec_()
