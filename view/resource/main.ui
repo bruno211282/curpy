@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>PyNotes</class>
+ <widget class="QMainWindow" name="PyNotes">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -10,8 +10,20 @@
     <height>707</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>913</width>
+    <height>707</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>913</width>
+    <height>707</height>
+   </size>
+  </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>PyNotes!</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QWidget" name="gridLayoutWidget">
@@ -104,7 +116,7 @@
        <item>
         <widget class="QLabel" name="label">
          <property name="text">
-          <string>Filtrar Notas:</string>
+          <string>Filtrar Notas: </string>
          </property>
         </widget>
        </item>
@@ -140,6 +152,9 @@
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item alignment="Qt::AlignLeft">
         <widget class="QPushButton" name="btn_new_user">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Genera un nuevo usuario&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
          <property name="text">
           <string>Nuevo Usuario</string>
          </property>
@@ -152,6 +167,10 @@
            <width>200</width>
            <height>0</height>
           </size>
+         </property>
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Genera una nueva nota&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
+</string>
          </property>
          <property name="text">
           <string>Nueva Nota</string>
@@ -167,7 +186,7 @@
          <item>
           <widget class="QLabel" name="label_2">
            <property name="text">
-            <string>Titulo de la Nota:</string>
+            <string>Titulo de la Nota: </string>
            </property>
           </widget>
          </item>
@@ -191,7 +210,7 @@
          <item alignment="Qt::AlignLeft|Qt::AlignVCenter">
           <widget class="QLabel" name="label_3">
            <property name="text">
-            <string>Usuario:</string>
+            <string>Usuario: </string>
            </property>
           </widget>
          </item>
@@ -202,6 +221,10 @@
              <width>310</width>
              <height>0</height>
             </size>
+           </property>
+           <property name="toolTip">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click para mostrar la lista completa de usuarios del sistema&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
+</string>
            </property>
            <property name="iconSize">
             <size>

@@ -12,17 +12,11 @@ from data.data_models import User
 
 
 class WindowController:
-    """Se definen los metodos de control de la ventana.
+    """Se definen los metodos de control de la ventana."""
 
-    En esta clase, por medio de la herencia se agregan al
-    layout de la ventana los metodos necesarios para el
-    control de la misma.
-    """
-
-    def __init__(self, app, dbm):
+    def __init__(self, dbm):
         """Inicialización de DbManager y elementos de UI."""
 
-        self.app = app
         self.dbm = dbm
 
         self.layout = uic.loadUi("view/resource/main.ui")
