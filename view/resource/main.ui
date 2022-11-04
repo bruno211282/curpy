@@ -46,7 +46,23 @@
      <item row="3" column="0">
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <widget class="QListView" name="notes_list"/>
+        <widget class="QListWidget" name="notes_list">
+         <item>
+          <property name="text">
+           <string>Item 1</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Nota 2</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Un kilo de asado</string>
+          </property>
+         </item>
+        </widget>
        </item>
        <item>
         <spacer name="horizontalSpacer_4">
@@ -109,7 +125,14 @@
         </spacer>
        </item>
        <item>
-        <widget class="QLineEdit" name="line_filter"/>
+        <widget class="QLineEdit" name="line_filter">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="toolTip">
+          <string>Sin funcionalidad en esta version</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
@@ -149,7 +172,7 @@
           </widget>
          </item>
          <item alignment="Qt::AlignRight">
-          <widget class="QLineEdit" name="line_title">
+          <widget class="QLineEdit" name="note_title">
            <property name="minimumSize">
             <size>
              <width>310</width>
@@ -173,7 +196,7 @@
           </widget>
          </item>
          <item alignment="Qt::AlignRight|Qt::AlignVCenter">
-          <widget class="QComboBox" name="comboBox">
+          <widget class="QComboBox" name="user_list">
            <property name="minimumSize">
             <size>
              <width>310</width>
@@ -250,7 +273,7 @@
      <x>0</x>
      <y>0</y>
      <width>913</width>
-     <height>20</height>
+     <height>30</height>
     </rect>
    </property>
   </widget>
