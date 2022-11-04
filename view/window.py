@@ -51,39 +51,26 @@ class WindowController:
         body = self.layout.notes_text.toPlainText()
         title = self.layout.note_title.text()
 
-        # Validar que el titulo sea solo alfanumérico
-        if not title.isalnum():
-            print('Invalid characters in note title.')
-            msg = QtWidgets.QMessageBox()
-            msg.setIcon(QtWidgets.QMessageBox.Critical)
-            msg.setText("Error en Título ingresado!")
-            msg.setInformativeText(
-                'El Título de una nota puede contener solo caracteres'
-                + ' alfanuméricos.'
+        if self.note is None:
+            print(f'Saving new note with title: {title}')
+            self.note = Note(
+                title=title,
+                body=body,
+                author=self.user
             )
-            msg.setWindowTitle("ERROR")
-            msg.exec_()
+            self.note.body = (
+                f'{body} \n\n\n\nAuthored by {self.note.author} at'
+                + f' {self.note.created_at}.'
+            )
+            self.dbm.create_note(self.note)
         else:
-            if self.note is None:
-                print(f'Saving new note with title: {title}')
-                self.note = Note(
-                    title=title,
-                    body=body,
-                    author=self.user
-                )
-                self.note.body = (
-                    f'{body} \n\n\n\nAuthored by {self.note.author} at'
-                    + f' {self.note.created_at}.'
-                )
-                self.dbm.create_note(self.note)
-            else:
-                print(f'Updating old note with title: {title}')
-                self.note.title = title
-                self.note.body = body
-                self.note.author = self.user
-                self.dbm.update_note(self.note)
+            print(f'Updating old note with title: {title}')
+            self.note.title = title
+            self.note.body = body
+            self.note.author = self.user
+            self.dbm.update_note(self.note)
 
-            self.update_note_list()
+        self.update_note_list()
 
     def new_note(self):
         """Reinicia los elementos de la UI para poder crear una nota nueva.
