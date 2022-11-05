@@ -3,4 +3,6 @@
 .pytest_cache/*
 data/__pycache__
 view/__pycache__
+logger/__pycache__
 test.py
+*.log
