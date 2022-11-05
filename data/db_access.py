@@ -1,21 +1,11 @@
 """Administrador de Base de Datos."""
 import sqlite3
 from data.data_models import Note, User
+from logger.logger import log_try_exc_deco
 
 
 class DbManager:
-    """Administrador de Base de Datos SQL.
-
-    Métodos:
-        + _create_tables()
-        + create_note()
-        + create_user()
-        + update_note()
-        + delete_note()
-        + get_note_from_id()
-        + get_list_of_notes()
-        + get_list_of_users()
-    """
+    """Administrador de Base de Datos SQL."""
 
     def __init__(self):
         """Conecta el objeto 'db' con la DB SQL y crea las tablas."""
@@ -26,7 +16,8 @@ class DbManager:
         """Cierra la DB."""
         self.db.close()
 
-    def _create_tables(self):
+    @log_try_exc_deco("create database tables")
+    def _create_tables(self) -> None:
         """Ejecuta las queries necesarias para crear las tablas requeridas."""
         with self.db as query:
             query.execute(
@@ -46,10 +37,8 @@ class DbManager:
                 )"""
             )
 
-    def create_note(
-        self,
-        note: Note
-    ) -> None:
+    @log_try_exc_deco("execute db query to create new note")
+    def create_note(self, note: Note) -> None:
         """Ejecuta la Query necesaria para la creación de una nota.
 
         Args:
@@ -70,10 +59,8 @@ class DbManager:
                 }
             )
 
-    def create_user(
-        self,
-        user: User
-    ) -> None:
+    @log_try_exc_deco("execute db query to create new user")
+    def create_user(self, user: User) -> None:
         """Ejecuta la Query necesaria para la creación de un usuario.
 
         Args:
@@ -90,10 +77,8 @@ class DbManager:
                 {'user_name': user.user_name}
             )
 
-    def update_note(
-        self,
-        note: Note
-    ) -> None:
+    @log_try_exc_deco("execute db query to update existing note")
+    def update_note(self, note: Note) -> None:
         """Ejecuta la Query necesaria para actualizar una nota existente.
 
         Args:
@@ -113,10 +98,8 @@ class DbManager:
                 {'title': note.title, 'body': note.body, 'noteid': note.noteid}
             )
 
-    def delete_note(
-        self,
-        noteid: int
-    ) -> None:
+    @log_try_exc_deco("execute db query to delete existing note")
+    def delete_note(self, noteid: int) -> None:
         """Ejecuta la Query necesaria para eliminar una nota existente.
 
         Args:
@@ -133,10 +116,8 @@ class DbManager:
                 {'noteid': noteid}
             )
 
-    def get_note_from_id(
-        self,
-        noteid: int
-    ) -> Note:
+    @log_try_exc_deco("execute db query to get a single note")
+    def get_note_from_id(self, noteid: int) -> Note:
         """Busca una nota en la base de datos y la devuelve.
 
         Args:
@@ -163,9 +144,8 @@ class DbManager:
             body=data[1]
         )
 
-    def get_list_of_notes(
-        self
-    ) -> list:
+    @log_try_exc_deco("execute db query to get the list of notes")
+    def get_list_of_notes(self) -> list:
         """Retorna lista de notas cargadas en la DB.
 
         Returns:
@@ -188,9 +168,8 @@ class DbManager:
         ]
         return notes
 
-    def get_list_of_users(
-        self
-    ) -> list:
+    @log_try_exc_deco("execute db query to get the list of users")
+    def get_list_of_users(self) -> list:
         """Retorna lista de usuarios cargados en la DB.
 
         Returns:
