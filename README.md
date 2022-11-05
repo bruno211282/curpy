@@ -14,14 +14,14 @@ Se utiliza como motor de ventanas PyQt5 y base de datos a SQLite3.
   - García, Bruno
 
 ## Dependencias
-La plaicacion esta desarrollada utilizando Python version 3.9.13. Antes de ejecutar nada se debe tener instalado el interprete de python correspondiente. Se lo puede descargar de [python.org](https://www.python.org/downloads/).
+La aplicación está desarrollada utilizando Python versión 3.9.13. Antes de ejecutar nada se debe tener instalado el interprete de python correspondiente. Se lo puede descargar de [python.org](https://www.python.org/downloads/).
 Una vez instalado el interprete, para instalar las dependencias se debe ejecutar el comando:
 
     pip install -r requirements.txt
 
 
 ## Modo de uso
-Se debe ejecutar utilizando Python3 en una consola ubicada en el directorio raíz el siguiente comando:
+Se debe ejecutar el siguiente comando en una consola ubicada en el directorio raíz del proyecto:
 
     python notes.py
 
