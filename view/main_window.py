@@ -3,7 +3,6 @@
 
 
 from PyQt5 import uic
-from view.new_user_window import NewUserController
 from PyQt5 import QtWidgets
 
 
@@ -20,7 +19,7 @@ class WindowController:
         self.dbm = dbm
 
         self.layout = uic.loadUi("view/resource/main.ui")
-        self.layout.show()
+        self.new_usr_dialog = uic.loadUi("view/resource/new_user.ui")
 
         self.update_user_list()
         self.update_note_list()
@@ -38,6 +37,10 @@ class WindowController:
         self.layout.btn_delete.clicked.connect(self.delete_selected_note)
         self.layout.notes_list.itemClicked.connect(self.load_selected_note)
         self.layout.user_list.currentIndexChanged.connect(self.user_changed)
+        self.new_usr_dialog.buttonBox.accepted.connect(self.new_user_accept)
+        self.new_usr_dialog.buttonBox.rejected.connect(self.new_user_cancel)
+
+        self.layout.show()
 
     def save_note(self):
         """Guarda Nota nueva o la actualiza si ya existe en la DB."""
@@ -84,10 +87,32 @@ class WindowController:
         Al presionar el botón de nuevo usuario, se presenta
         la ventana de diálogo para ingresar el nombre.
         """
-        print('New user')
-        self.new_user_win = NewUserController()
-        self.new_user_win.update_user_list = self.update_user_list
-        self.new_user_win.dialog.show()
+        print('Creating new user')
+        self.new_usr_dialog.show()
+
+    def new_user_accept(self):
+        """Acepta y guarda un usuario nuevo en la DB.
+
+        Si se introduce una string como nombre y se oprime
+        aceptar, se guarda el nombre de usuario en la DB.
+        """
+        print('Getting info about new user')
+        user_name = self.new_usr_dialog.line_new_user.text()
+        if user_name != '':
+            user = User(user_name=user_name)
+            self.dbm.create_user(user)
+            print(f'User {user.user_name} created')
+
+        self.update_user_list()
+        self.new_usr_dialog.close()
+
+    def new_user_cancel(self):
+        """Cierra la ventana de creación de usuario.
+
+        Si se oprime cancelar, se cierra el diálogo sin guardar.
+        """
+        print('New user cancelled.')
+        self.new_usr_dialog.close()
 
     def update_note_list(self):
         """Actualización de listado de notas en la DB."""
