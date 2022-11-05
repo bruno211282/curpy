@@ -3,13 +3,14 @@
 # -*- coding: utf-8 -*-
 
 from PyQt5.QtWidgets import QApplication
-from view.window import WindowController
+from data.db_access import DbManager
+from view.main_window import WindowController
 import sys
 
 
 if __name__ == "__main__":
     """Ejecución de aplicación con interfaz gráfica."""
     app = QApplication(sys.argv)
-    ui = WindowController()
-    ui.main_window.show()
+    dbm = DbManager()
+    ui = WindowController(dbm)
     sys.exit(app.exec_())
