@@ -6,3 +6,4 @@ view/__pycache__
 logger/__pycache__
 test.py
 *.log
+docs/build/*
