@@ -7,3 +7,4 @@ logger/__pycache__
 server/lib/__pycache__
 test.py
 *.log
+docs/build/*
