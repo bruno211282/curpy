@@ -1,5 +1,6 @@
 """Administrador de Base de Datos."""
 import sqlite3
+
 from data.data_models import Note, User
 from logger.logger import log_try_exc_deco
 
@@ -24,7 +25,8 @@ class DbManager:
                 """
                 CREATE TABLE IF NOT EXISTS users (
                     user_id INTEGER PRIMARY KEY,
-                    user_name TEXT
+                    user_name TEXT,
+                    user_paswd TEXT
                 )"""
             )
             query.execute(
@@ -70,11 +72,14 @@ class DbManager:
             query.execute(
                 """
                 INSERT INTO users
-                    (user_name)
+                    (user_name, user_paswd)
                 VALUES
-                    (:user_name)
+                    (:user_name, :user_paswd)
                 """,
-                {'user_name': user.user_name}
+                {
+                    'user_name': user.user_name,
+                    'user_paswd': user.password
+                }
             )
 
     @log_try_exc_deco("execute db query to update existing note")
@@ -160,13 +165,11 @@ class DbManager:
             """
         )
         data = query.fetchall()
-        notes = [
-            Note(
-                noteid=note[0],
-                title=note[1],
-                body=note[2]) for note in data
-        ]
-        return notes
+        return [Note(
+            noteid=note[0],
+            title=note[1],
+            body=note[2]
+        ) for note in data]
 
     @log_try_exc_deco("execute db query to get the list of users")
     def get_list_of_users(self) -> list:
@@ -184,10 +187,4 @@ class DbManager:
             """
         )
         data = query.fetchall()
-        users = [
-            User(
-                user_id=user[0],
-                user_name=user[1]
-            ) for user in data
-        ]
-        return users
+        return [User(user_id=user[0], user_name=user[1]) for user in data]

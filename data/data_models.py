@@ -9,7 +9,8 @@ class User:
     def __init__(
         self,
         user_id: Union[int, None] = None,
-        user_name: str = ""
+        user_name: str = "",
+        password: str = ""
     ):
         """Método constructor de un Usuario.
 
@@ -18,9 +19,12 @@ class User:
                     Valor por defecto: None.
             user_name (str, optional): [description]. Nombre del usuario.
                     Valor por defecto: "".
+            password (str, optional): [description]. Clave para el usuario.
+                    Valor por defecto: "".
         """
         self.user_id = user_id
         self.user_name = user_name
+        self.password = password
 
     def __str__(self) -> str:
         """Devuelve nombre del usuario.
