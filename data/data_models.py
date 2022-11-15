@@ -57,7 +57,7 @@ class Note:
         self.title = title
         self.body = body
         self.author = author
-        self.created_at = datetime.today()
+        self.created_at = datetime.now()
 
     def __str__(self) -> str:
         """Devuelve el título de la nota.
@@ -73,4 +73,4 @@ class Note:
         Returns:
             bool: True si está guardada.
         """
-        return False if self.noteid is None else True
+        return self.noteid is not None
