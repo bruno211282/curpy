@@ -65,28 +65,18 @@ class WindowController(QtWidgets.QMainWindow):
         self.dbm = dbm
 
         uic.loadUi("view/resource/main.ui", self)
-        self.new_usr_dialog = uic.loadUi("view/resource/new_user.ui")
 
-        self.update_user_list()
         self.update_note_list()
         self.note = None
 
-        self.user_list.setCurrentIndex(0)
-        self.user = User(
-            user_name=self.user_list.currentData(0),
-            user_id=self.user_list.currentData(1)
-        )
+        self.user = "Temp User..."  # Must be a User instance...
 
         self.btn_save.clicked.connect(self.save_note)
         self.btn_new.clicked.connect(self.new_note)
-        self.btn_new_user.clicked.connect(self.new_user)
         self.btn_delete.clicked.connect(self.delete_selected_note)
         self.notes_list.itemClicked.connect(self.load_selected_note)
-        self.user_list.currentIndexChanged.connect(self.user_changed)
-        self.new_usr_dialog.buttonBox.accepted.connect(self.new_user_accept)
-        self.new_usr_dialog.buttonBox.rejected.connect(self.new_user_cancel)
 
-        self.show()
+        self.username.setText(self.user)
 
     @ log_try_exc_deco("save a note to database")
     def save_note(self, *args):
@@ -129,86 +119,6 @@ class WindowController(QtWidgets.QMainWindow):
         self.notes_text.setPlainText('')
         self.note_title.setText('')
 
-    @log_try_exc_deco("open new user dialog")
-    def new_user(self, *args):
-        """Inicializa una nueva ventana para creación de usuario.
-
-        Al presionar el botón de nuevo usuario, se presenta
-        la ventana de diálogo para ingresar el nombre.
-        """
-        print('Creating new user')
-        self.new_usr_dialog.new_user_name.setText("")
-        self.new_usr_dialog.new_user_pass_1.setText("")
-        self.new_usr_dialog.new_user_pass_2.setText("")
-        self.new_usr_dialog.show()
-
-    @log_try_exc_deco("save new user")
-    def new_user_accept(self, *args):
-        """Acepta y guarda un usuario nuevo en la DB.
-
-        Si se introduce una string como nombre y se oprime
-        aceptar, se guarda el nombre de usuario en la DB.
-        """
-        print('Getting info about new user')
-        user_name = self.new_usr_dialog.new_user_name.text()
-        passwd_1 = self.new_usr_dialog.new_user_pass_1.text()
-        passwd_2 = self.new_usr_dialog.new_user_pass_2.text()
-        names = [user.user_name for user in self.users]
-
-        if passwd_1 != passwd_2:
-            msg = QtWidgets.QMessageBox()
-            msg.setIcon(QtWidgets.QMessageBox.Critical)
-            msg.setText("Las claves no coinciden!")
-            msg.setInformativeText(
-                'Debe sescribir la misma clave en ambos campos.'
-            )
-            msg.setWindowTitle("ERROR")
-            msg.exec_()
-            self.new_usr_dialog.show()
-
-        elif not user_name.isalnum():
-            msg = QtWidgets.QMessageBox()
-            msg.setIcon(QtWidgets.QMessageBox.Critical)
-            msg.setText("Nombre de usuario no valido")
-            msg.setInformativeText(
-                'El usuario solo puede contener caratéres alfanumericos'
-            )
-            msg.setWindowTitle("ERROR")
-            msg.exec_()
-            self.new_usr_dialog.show()
-
-        elif user_name in names:
-            msg = QtWidgets.QMessageBox()
-            msg.setIcon(QtWidgets.QMessageBox.Critical)
-            msg.setText("El usuario ingresado ya existe")
-            msg.setInformativeText(
-                'Debe ingresar un usuario que no exista '
-                'previamente o hacer login si este ya es su usuario.'
-            )
-            msg.setWindowTitle("ERROR")
-            msg.exec_()
-            self.new_usr_dialog.show()
-
-        else:
-            user = User(
-                user_name=user_name,
-                password=passwd_1
-            )
-            self.dbm.create_user(user)
-            print(f'User {user.user_name} created')
-
-            self.update_user_list()
-            self.new_usr_dialog.close()
-
-    @log_try_exc_deco("cancel user creation")
-    def new_user_cancel(self, *args):
-        """Cierra la ventana de creación de usuario.
-
-        Si se oprime cancelar, se cierra el diálogo sin guardar.
-        """
-        print('New user cancelled.')
-        self.new_usr_dialog.close()
-
     @log_try_exc_deco("retrieve notes from database")
     def update_note_list(self, *args):
         """Actualización de listado de notas en la DB."""
@@ -219,26 +129,6 @@ class WindowController(QtWidgets.QMainWindow):
             itm.setData(1, note.noteid)
             self.notes_list.addItem(itm)
             print(f'Updating List with Note: {note.title}')
-
-    @log_try_exc_deco("retrieve users from database")
-    def update_user_list(self, *args):
-        """Actualización de listado de usuarios en la DB."""
-        self.users = self.dbm.get_list_of_users()
-        self.user_list.clear()
-        for index, user in enumerate(self.users):
-            self.user_list.addItem(user.user_name)
-            self.user_list.setItemData(
-                index, user.user_id, role=1)
-
-        print('Updating User List')
-
-    @log_try_exc_deco("change selected user")
-    def user_changed(self, *args):
-        """Actualiza el usuario seleccionado dentro del controlador."""
-        user_name = self.user_list.currentData(0)
-        user_id = self.user_list.currentData(1)
-        self.user = User(user_id, user_name)
-        print(f'Selected User: {user_name} with id: {user_id}')
 
     @log_try_exc_deco("load note")
     def load_selected_note(self, *args):

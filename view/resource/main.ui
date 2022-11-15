@@ -58,23 +58,7 @@
      <item row="3" column="0">
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <widget class="QListWidget" name="notes_list">
-         <item>
-          <property name="text">
-           <string>Item 1</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Nota 2</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Un kilo de asado</string>
-          </property>
-         </item>
-        </widget>
+        <widget class="QListWidget" name="notes_list"/>
        </item>
        <item>
         <spacer name="horizontalSpacer_4">
@@ -146,20 +130,17 @@
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="QToolButton" name="toolButton_2">
+         <property name="text">
+          <string>X</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </item>
      <item row="1" column="2">
       <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item alignment="Qt::AlignLeft">
-        <widget class="QPushButton" name="btn_new_user">
-         <property name="toolTip">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Genera un nuevo usuario&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="text">
-          <string>Nuevo Usuario</string>
-         </property>
-        </widget>
-       </item>
        <item alignment="Qt::AlignRight">
         <widget class="QPushButton" name="btn_new">
          <property name="minimumSize">
@@ -182,9 +163,81 @@
      <item row="3" column="2">
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <widget class="QLabel" name="label_3">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Usuario: </string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="username">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::NoFrame</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Plain</enum>
+           </property>
+           <property name="text">
+            <string>sdfg</string>
+           </property>
+           <property name="textFormat">
+            <enum>Qt::PlainText</enum>
+           </property>
+           <property name="scaledContents">
+            <bool>false</bool>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+           <property name="margin">
+            <number>1</number>
+           </property>
+           <property name="openExternalLinks">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
         <layout class="QHBoxLayout" name="horizontalLayout_4">
          <item>
           <widget class="QLabel" name="label_2">
+           <property name="minimumSize">
+            <size>
+             <width>111</width>
+             <height>0</height>
+            </size>
+           </property>
            <property name="text">
             <string>Titulo de la Nota: </string>
            </property>
@@ -200,37 +253,6 @@
            </property>
            <property name="placeholderText">
             <string/>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_5">
-         <item alignment="Qt::AlignLeft|Qt::AlignVCenter">
-          <widget class="QLabel" name="label_3">
-           <property name="text">
-            <string>Usuario: </string>
-           </property>
-          </widget>
-         </item>
-         <item alignment="Qt::AlignRight|Qt::AlignVCenter">
-          <widget class="QComboBox" name="user_list">
-           <property name="minimumSize">
-            <size>
-             <width>310</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click para mostrar la lista completa de usuarios del sistema&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-</string>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>16</width>
-             <height>16</height>
-            </size>
            </property>
           </widget>
          </item>
@@ -303,5 +325,54 @@
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>btn_new</sender>
+   <signal>clicked()</signal>
+   <receiver>note_title</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>785</x>
+     <y>64</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>783</x>
+     <y>142</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_new</sender>
+   <signal>clicked()</signal>
+   <receiver>notes_text</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>830</x>
+     <y>59</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>687</x>
+     <y>255</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>line_filter</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>427</x>
+     <y>59</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>366</x>
+     <y>57</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
