@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
+import hashlib
 from PyQt5 import QtWidgets, uic
 
 from data.data_models import Note, User
@@ -10,9 +11,10 @@ from logger.logger import log_try_exc_deco
 
 
 class WellcomeDialog(QtWidgets.QDialog):
-    def __init__(self):
+    def __init__(self, dbm: DbManager):
         super().__init__()
         uic.loadUi("view/resource/wellcome.ui", self)
+        self.dbm = dbm
 
     def accept(self):
         # currentIndex = 1 -> signup
@@ -25,6 +27,8 @@ class WellcomeDialog(QtWidgets.QDialog):
                 self.sig_error.setText(
                     "Debe ingresar toda la informacion requerida"
                 )
+            elif self.dbm.user_exists_in_db(usr):
+                self.sig_error.setText("El usuario ingresado ya existe")
             elif " " in paswd:
                 self.sig_error.setText("No se admiten espacios en la clave")
             elif paswd != conf:
@@ -35,8 +39,12 @@ class WellcomeDialog(QtWidgets.QDialog):
                     "Solo se admiten caracteres alfanuméricos"
                 )
             else:
-                print("Estamos creando una cuenta!!!")
-                self.done(1)
+                hashed = hashlib.md5(paswd.encode()).hexdigest()
+                new_user = User(user_name=usr, password=hashed)
+                self.dbm.create_user(new_user)
+                self.main = WindowController(dbm=self.dbm, user=new_user)
+                self.main.show()
+                self.close()
 
         # currentIndex = 0 -> login
         else:
@@ -46,9 +54,17 @@ class WellcomeDialog(QtWidgets.QDialog):
                 self.log_error.setText(
                     "Debe ingresar toda la informacion requerida"
                 )
+            elif not self.dbm.user_exists_in_db(usr):
+                self.log_error.setText("El usuario ingresado no existe")
             else:
-                print("Estamos ingresando al sitio...")
-                self.done(1)
+                hashed = hashlib.md5(paswd.encode()).hexdigest()
+                user = self.dbm.check_password_by_username(usr, hashed)
+                if user is None:
+                    self.log_error.setText("La clave es incorrecta...")
+                else:
+                    self.main = WindowController(dbm=self.dbm, user=user)
+                    self.main.show()
+                    self.close()
 
     def reject(self):
         print("Reject")
@@ -58,7 +74,7 @@ class WellcomeDialog(QtWidgets.QDialog):
 class WindowController(QtWidgets.QMainWindow):
     """Se definen los metodos de control de la ventana."""
 
-    def __init__(self, dbm: DbManager):
+    def __init__(self, dbm: DbManager, user: User):
         """Controlador de la ventana principal de la aplicacion."""
 
         super().__init__()
@@ -69,14 +85,14 @@ class WindowController(QtWidgets.QMainWindow):
         self.update_note_list()
         self.note = None
 
-        self.user = "Temp User..."  # Must be a User instance...
+        self.user = user
 
         self.btn_save.clicked.connect(self.save_note)
         self.btn_new.clicked.connect(self.new_note)
         self.btn_delete.clicked.connect(self.delete_selected_note)
         self.notes_list.itemClicked.connect(self.load_selected_note)
 
-        self.username.setText(self.user)
+        self.username.setText(self.user.user_name)
 
     @ log_try_exc_deco("save a note to database")
     def save_note(self, *args):

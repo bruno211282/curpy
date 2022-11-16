@@ -4,6 +4,8 @@ import sqlite3
 from data.data_models import Note, User
 from logger.logger import log_try_exc_deco
 
+from typing import Union
+
 
 class DbManager:
     """Administrador de Base de Datos SQL."""
@@ -25,8 +27,8 @@ class DbManager:
                 """
                 CREATE TABLE IF NOT EXISTS users (
                     user_id INTEGER PRIMARY KEY,
-                    user_name TEXT,
-                    user_paswd TEXT
+                    user_name TEXT UNIQUE NOT NULL,
+                    user_paswd TEXT NOT NULL
                 )"""
             )
             query.execute(
@@ -81,6 +83,64 @@ class DbManager:
                     'user_paswd': user.password
                 }
             )
+
+    def user_exists_in_db(self, username: str) -> bool:
+        """Retorna True si el usuario existe.
+
+        Args:
+            str, username: nombre del usuario a obtener.
+
+        Returns:
+            bool: True si el usuario existe.
+        """
+        query = self.db.execute(
+            """
+            SELECT
+                COUNT(1)
+            FROM
+                users
+            WHERE
+                user_name = :user_name
+            """,
+            {'user_name': username}
+        )
+        data = query.fetchone()
+        return bool(data[0])
+
+    def check_password_by_username(
+        self,
+        username: str,
+        passhash: str
+    ) -> Union[User, None]:
+        """Busca un usuario en la base de datos y lo
+        devuelve si el hash de la clave es correcto.
+
+        Args:
+            str, username: nombre del usuario a obtener.
+            str, passhash: hash de la clave.
+
+        Returns:
+            User: Usuario valido.
+        """
+        query = self.db.execute(
+            """
+            SELECT
+                user_id, user_name, user_paswd
+            FROM
+                users
+            WHERE
+                user_name = :user_name
+            """,
+            {'user_name': username}
+        )
+        data = query.fetchone()
+        if passhash == data[2]:
+            return User(
+                user_id=data[0],
+                user_name=data[1]
+            )
+        else:
+            return None
 
     @log_try_exc_deco("execute db query to update existing note")
     def update_note(self, note: Note) -> None:
