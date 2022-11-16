@@ -28,5 +28,7 @@ Se debe ejecutar el siguiente comando en una consola ubicada en el directorio ra
 
 ## Funcionalidades pendientes
   - Agregar el acceso a una SQL via red para compartir notas.
+  - Desarrollo de un ORM basado en descriptores.
   - Agregar manejo de algunas excepciones
   - Agregar la funcionalidad del filtrado de notas (existe el campo para filtrar, pero no tiene funcionalidad)
+  - Chequear / Escapar caracteres especiales en los campos de texto para evitar SQL Inj.
