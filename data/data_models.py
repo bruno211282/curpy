@@ -9,7 +9,8 @@ class User:
     def __init__(
         self,
         user_id: Union[int, None] = None,
-        user_name: str = ""
+        user_name: str = "",
+        password: str = ""
     ):
         """Método constructor de un Usuario.
 
@@ -18,9 +19,12 @@ class User:
                     Valor por defecto: None.
             user_name (str, optional): [description]. Nombre del usuario.
                     Valor por defecto: "".
+            password (str, optional): [description]. Clave para el usuario.
+                    Valor por defecto: "".
         """
         self.user_id = user_id
         self.user_name = user_name
+        self.password = password
 
     def __str__(self) -> str:
         """Devuelve nombre del usuario.
@@ -53,7 +57,7 @@ class Note:
         self.title = title
         self.body = body
         self.author = author
-        self.created_at = datetime.today()
+        self.created_at = datetime.now()
 
     def __str__(self) -> str:
         """Devuelve el título de la nota.
@@ -69,4 +73,4 @@ class Note:
         Returns:
             bool: True si está guardada.
         """
-        return False if self.noteid is None else True
+        return self.noteid is not None

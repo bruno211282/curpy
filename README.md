@@ -27,7 +27,6 @@ Se debe ejecutar el siguiente comando en una consola ubicada en el directorio ra
 
 
 ## Funcionalidades pendientes
-  - Manejo completo de Usuarios
   - Agregar el acceso a una SQL via red para compartir notas.
   - Agregar manejo de algunas excepciones
   - Agregar la funcionalidad del filtrado de notas (existe el campo para filtrar, pero no tiene funcionalidad)

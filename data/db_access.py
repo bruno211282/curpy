@@ -1,7 +1,10 @@
 """Administrador de Base de Datos."""
 import sqlite3
+
 from data.data_models import Note, User
 from logger.logger import log_try_exc_deco
+
+from typing import Union
 
 
 class DbManager:
@@ -24,7 +27,8 @@ class DbManager:
                 """
                 CREATE TABLE IF NOT EXISTS users (
                     user_id INTEGER PRIMARY KEY,
-                    user_name TEXT
+                    user_name TEXT UNIQUE NOT NULL,
+                    user_paswd TEXT NOT NULL
                 )"""
             )
             query.execute(
@@ -70,12 +74,73 @@ class DbManager:
             query.execute(
                 """
                 INSERT INTO users
-                    (user_name)
+                    (user_name, user_paswd)
                 VALUES
-                    (:user_name)
+                    (:user_name, :user_paswd)
                 """,
-                {'user_name': user.user_name}
+                {
+                    'user_name': user.user_name,
+                    'user_paswd': user.password
+                }
             )
+
+    def user_exists_in_db(self, username: str) -> bool:
+        """Retorna True si el usuario existe.
+
+        Args:
+            str, username: nombre del usuario a obtener.
+
+        Returns:
+            bool: True si el usuario existe.
+        """
+        query = self.db.execute(
+            """
+            SELECT
+                COUNT(1)
+            FROM
+                users
+            WHERE
+                user_name = :user_name
+            """,
+            {'user_name': username}
+        )
+        data = query.fetchone()
+        return bool(data[0])
+
+    def check_password_by_username(
+        self,
+        username: str,
+        passhash: str
+    ) -> Union[User, None]:
+        """Busca un usuario en la base de datos y lo
+        devuelve si el hash de la clave es correcto.
+
+        Args:
+            str, username: nombre del usuario a obtener.
+            str, passhash: hash de la clave.
+
+        Returns:
+            User: Usuario valido.
+        """
+        query = self.db.execute(
+            """
+            SELECT
+                user_id, user_name, user_paswd
+            FROM
+                users
+            WHERE
+                user_name = :user_name
+            """,
+            {'user_name': username}
+        )
+        data = query.fetchone()
+        if passhash == data[2]:
+            return User(
+                user_id=data[0],
+                user_name=data[1]
+            )
+        else:
+            return None
 
     @log_try_exc_deco("execute db query to update existing note")
     def update_note(self, note: Note) -> None:
@@ -145,7 +210,7 @@ class DbManager:
         )
 
     @log_try_exc_deco("execute db query to get the list of notes")
-    def get_list_of_notes(self) -> list:
+    def get_list_of_notes(self, user_id) -> list:
         """Retorna lista de notas cargadas en la DB.
 
         Returns:
@@ -157,16 +222,17 @@ class DbManager:
                 noteid, title, body
             FROM
                 notes
-            """
+            WHERE
+                author = :author
+            """,
+            {'author': user_id}
         )
         data = query.fetchall()
-        notes = [
-            Note(
-                noteid=note[0],
-                title=note[1],
-                body=note[2]) for note in data
-        ]
-        return notes
+        return [Note(
+            noteid=note[0],
+            title=note[1],
+            body=note[2]
+        ) for note in data]
 
     @log_try_exc_deco("execute db query to get the list of users")
     def get_list_of_users(self) -> list:
@@ -184,10 +250,4 @@ class DbManager:
             """
         )
         data = query.fetchall()
-        users = [
-            User(
-                user_id=user[0],
-                user_name=user[1]
-            ) for user in data
-        ]
-        return users
+        return [User(user_id=user[0], user_name=user[1]) for user in data]
