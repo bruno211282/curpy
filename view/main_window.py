@@ -3,7 +3,6 @@
 
 
 import hashlib
-import weakref
 
 from PyQt5 import QtWidgets, uic
 
