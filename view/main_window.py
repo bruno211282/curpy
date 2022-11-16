@@ -79,13 +79,12 @@ class WindowController(QtWidgets.QMainWindow):
 
         super().__init__()
         self.dbm = dbm
+        self.user = user
+        self.note = None
 
         uic.loadUi("view/resource/main.ui", self)
 
         self.update_note_list()
-        self.note = None
-
-        self.user = user
 
         self.btn_save.clicked.connect(self.save_note)
         self.btn_new.clicked.connect(self.new_note)
@@ -132,7 +131,7 @@ class WindowController(QtWidgets.QMainWindow):
     @log_try_exc_deco("retrieve notes from database")
     def update_note_list(self, *args):
         """Actualización de listado de notas en la DB."""
-        notes = self.dbm.get_list_of_notes()
+        notes = self.dbm.get_list_of_notes(self.user.user_id)
         self.notes_list.clear()
         for note in notes:
             itm = QtWidgets.QListWidgetItem(note.title)

@@ -210,7 +210,7 @@ class DbManager:
         )
 
     @log_try_exc_deco("execute db query to get the list of notes")
-    def get_list_of_notes(self) -> list:
+    def get_list_of_notes(self, user_id) -> list:
         """Retorna lista de notas cargadas en la DB.
 
         Returns:
@@ -222,7 +222,10 @@ class DbManager:
                 noteid, title, body
             FROM
                 notes
-            """
+            WHERE
+                author = :author
+            """,
+            {'author': user_id}
         )
         data = query.fetchall()
         return [Note(
