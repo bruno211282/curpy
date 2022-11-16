@@ -3,6 +3,8 @@
 
 
 import hashlib
+import weakref
+
 from PyQt5 import QtWidgets, uic
 
 from data.data_models import Note, User
@@ -42,7 +44,7 @@ class WellcomeDialog(QtWidgets.QDialog):
                 hashed = hashlib.md5(paswd.encode()).hexdigest()
                 new_user = User(user_name=usr, password=hashed)
                 self.dbm.create_user(new_user)
-                self.main = WindowController(dbm=self.dbm, user=new_user)
+                self.main = WindowController(self, dbm=self.dbm, user=new_user)
                 self.main.show()
                 self.close()
 
@@ -62,7 +64,7 @@ class WellcomeDialog(QtWidgets.QDialog):
                 if user is None:
                     self.log_error.setText("La clave es incorrecta...")
                 else:
-                    self.main = WindowController(dbm=self.dbm, user=user)
+                    self.main = WindowController(self, dbm=self.dbm, user=user)
                     self.main.show()
                     self.close()
 
@@ -70,14 +72,24 @@ class WellcomeDialog(QtWidgets.QDialog):
         print("Reject")
         self.done(0)
 
+    def clear(self):
+        self.login_user_name.clear()
+        self.login_user_pass.clear()
+        self.log_error.clear()
+        self.new_user_name.clear()
+        self.new_user_pass_1.clear()
+        self.new_user_pass_2.clear()
+        self.sig_error.clear()
+
 
 class WindowController(QtWidgets.QMainWindow):
     """Se definen los metodos de control de la ventana."""
 
-    def __init__(self, dbm: DbManager, user: User):
+    def __init__(self, parent, dbm: DbManager, user: User):
         """Controlador de la ventana principal de la aplicacion."""
 
         super().__init__()
+        self._parent = parent
         self.dbm = dbm
         self.user = user
         self.note = None
@@ -90,6 +102,7 @@ class WindowController(QtWidgets.QMainWindow):
         self.btn_new.clicked.connect(self.new_note)
         self.btn_delete.clicked.connect(self.delete_selected_note)
         self.notes_list.itemClicked.connect(self.load_selected_note)
+        self.btnlogout.clicked.connect(self.logout)
 
         self.username.setText(self.user.user_name)
 
@@ -169,3 +182,8 @@ class WindowController(QtWidgets.QMainWindow):
             )
             msg.setWindowTitle("ERROR")
             msg.exec_()
+
+    def logout(self) -> None:
+        self._parent.clear()
+        self._parent.show()
+        self.close()
