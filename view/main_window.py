@@ -108,10 +108,6 @@ class WindowController(QtWidgets.QMainWindow):
                 body=body,
                 author=self.user
             )
-            self.note.body = (
-                f'{body} \n\n\n\nAuthored by {self.note.author} at'
-                f' {self.note.created_at}.'
-            )
             self.dbm.create_note(self.note)
         else:
             print(f'Updating old note with title: {title}')
@@ -132,8 +128,6 @@ class WindowController(QtWidgets.QMainWindow):
         """
         print('New note!!')
         self.note = None
-        self.notes_text.setPlainText('')
-        self.note_title.setText('')
 
     @log_try_exc_deco("retrieve notes from database")
     def update_note_list(self, *args):
