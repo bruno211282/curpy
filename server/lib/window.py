@@ -1,6 +1,6 @@
 import json
 from PyQt5 import QtWidgets, uic
-from PyQt5.QtCore import QThread
+from PyQt5.QtCore import QThread, Qt
 
 from lib.libsrv import Server
 
@@ -37,13 +37,30 @@ class LogWindow(QtWidgets.QMainWindow):
         }
         """
         data = json.loads(data)
+        try:
+            desc = data['desc']
+        except KeyError:
+            desc = ""
+
+        messages = {
+            "signup": {
+                "success": f"[{data['when']}] -> [Se acaba de generar el usuario {data['name']}]",
+                "error": f"[{data['when']}] -> [Generacion de usuario erroneo: {desc}"
+            },
+            "login": {
+                "success": f"[{data['when']}] -> [Acaba de ingresar el usuario {data['name']}]",
+                "error": f"[{data['when']}] -> [Ingreso de usuario erroneo: {desc}"
+            }
+        }
+        itm = QtWidgets.QListWidgetItem(
+            messages[data["type"]][data["result"]]
+        )
+        if data["result"] == "error":
+            itm.setForeground(Qt.red)
+
         if data["type"] == "login":
-            itm = QtWidgets.QListWidgetItem(
-                f"{data['name']} ingreso en: {data['when']}")
             self.login_box.addItem(itm)
         elif data["type"] == "signup":
-            itm = QtWidgets.QListWidgetItem(
-                f"{data['name']} se unio e ingreso en: {data['when']}")
             self.signup_box.addItem(itm)
 
     def stop_server(self):
