@@ -26,10 +26,13 @@ class LogSubscriber:
         message["when"] = f"{datetime.now().strftime('%Y-%m-%d %H:%M')}"
         data = json.dumps(message)
 
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-            # Connect to server and send data
-            sock.connect((self.host, self.port))
-            sock.sendall(bytes(data + "\n", "utf-8"))
+        try:
+            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+                # Connect to server and send data
+                sock.connect((self.host, self.port))
+                sock.sendall(bytes(data + "\n", "utf-8"))
+        except ConnectionRefusedError:
+            print("Server is not listening...")
 
 
 class Publisher:
