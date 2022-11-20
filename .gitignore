@@ -4,5 +4,6 @@
 data/__pycache__
 view/__pycache__
 logger/__pycache__
+server/lib/__pycache__
 test.py
 *.log
