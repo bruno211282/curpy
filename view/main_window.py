@@ -59,7 +59,7 @@ class WellcomeDialog(QtWidgets.QDialog):
             else:
                 hashed = hashlib.md5(paswd.encode()).hexdigest()
                 new_user = User(user_name=usr, password=hashed)
-                self.dbm.create_user(new_user)
+                new_user = self.dbm.create_user(new_user)
 
                 data = {"name": usr, "result": "success"}
                 self.pub.dispatch("signup", data)
