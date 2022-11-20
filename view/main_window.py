@@ -30,17 +30,32 @@ class WellcomeDialog(QtWidgets.QDialog):
                 self.sig_error.setText(
                     "Debe ingresar toda la informacion requerida"
                 )
+                data = {"name": usr, "result": "error",
+                        "desc": "Campos vacios"}
+                self.pub.dispatch("signup", data)
             elif self.dbm.user_exists_in_db(usr):
                 self.sig_error.setText("El usuario ingresado ya existe")
+                data = {"name": usr, "result": "error",
+                        "desc": "Usuario ya existente"}
+                self.pub.dispatch("signup", data)
             elif " " in paswd:
                 self.sig_error.setText("No se admiten espacios en la clave")
+                data = {"name": usr, "result": "error",
+                        "desc": "Espacios en la clave"}
+                self.pub.dispatch("signup", data)
             elif paswd != conf:
                 self.sig_error.setText("Las claves no coinciden!")
+                data = {"name": usr, "result": "error",
+                        "desc": "Claves no coinciden"}
+                self.pub.dispatch("signup", data)
             elif not usr.isalnum():
                 self.sig_error.setText(
                     "Usuario invalido. "
                     "Solo se admiten caracteres alfanuméricos"
                 )
+                data = {"name": usr, "result": "error",
+                        "desc": "Usuario invalido"}
+                self.pub.dispatch("signup", data)
             else:
                 hashed = hashlib.md5(paswd.encode()).hexdigest()
                 new_user = User(user_name=usr, password=hashed)
@@ -61,13 +76,22 @@ class WellcomeDialog(QtWidgets.QDialog):
                 self.log_error.setText(
                     "Debe ingresar toda la informacion requerida"
                 )
+                data = {"name": usr, "result": "error",
+                        "desc": "Campos vacios"}
+                self.pub.dispatch("login", data)
             elif not self.dbm.user_exists_in_db(usr):
                 self.log_error.setText("El usuario ingresado no existe")
+                data = {"name": usr, "result": "error",
+                        "desc": "Usuario inexistente"}
+                self.pub.dispatch("login", data)
             else:
                 hashed = hashlib.md5(paswd.encode()).hexdigest()
                 user = self.dbm.check_password_by_username(usr, hashed)
                 if user is None:
                     self.log_error.setText("La clave es incorrecta...")
+                    data = {"name": usr, "result": "error",
+                            "desc": "Clave incorrecta!"}
+                    self.pub.dispatch("login", data)
                 else:
                     data = {"name": usr, "result": "success"}
                     self.pub.dispatch("login", data)
