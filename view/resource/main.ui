@@ -394,5 +394,37 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btn_delete</sender>
+   <signal>clicked()</signal>
+   <receiver>notes_text</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>229</x>
+     <y>669</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>542</x>
+     <y>506</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_delete</sender>
+   <signal>clicked()</signal>
+   <receiver>note_title</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>356</x>
+     <y>668</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>612</x>
+     <y>146</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
 </ui>

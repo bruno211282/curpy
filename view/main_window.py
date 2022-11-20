@@ -9,13 +9,15 @@ from PyQt5 import QtWidgets, uic
 from data.data_models import Note, User
 from data.db_access import DbManager
 from logger.logger import log_try_exc_deco
+from logger.pubsub import Publisher
 
 
 class WellcomeDialog(QtWidgets.QDialog):
-    def __init__(self, dbm: DbManager):
+    def __init__(self, dbm: DbManager, pub: Publisher):
         super().__init__()
         uic.loadUi("view/resource/wellcome.ui", self)
         self.dbm = dbm
+        self.pub = pub
 
     def accept(self):
         # currentIndex = 1 -> signup
@@ -43,6 +45,10 @@ class WellcomeDialog(QtWidgets.QDialog):
                 hashed = hashlib.md5(paswd.encode()).hexdigest()
                 new_user = User(user_name=usr, password=hashed)
                 self.dbm.create_user(new_user)
+
+                data = {"name": usr, "result": "success"}
+                self.pub.dispatch("signup", data)
+
                 self.main = WindowController(self, dbm=self.dbm, user=new_user)
                 self.main.show()
                 self.close()
@@ -63,6 +69,8 @@ class WellcomeDialog(QtWidgets.QDialog):
                 if user is None:
                     self.log_error.setText("La clave es incorrecta...")
                 else:
+                    data = {"name": usr, "result": "success"}
+                    self.pub.dispatch("login", data)
                     self.main = WindowController(self, dbm=self.dbm, user=user)
                     self.main.show()
                     self.close()
