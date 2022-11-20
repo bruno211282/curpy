@@ -114,13 +114,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QListWidget" name="signup_box">
-      <item>
-       <property name="text">
-        <string>Bruno</string>
-       </property>
-      </item>
-     </widget>
+     <widget class="QListWidget" name="signup_box"/>
     </item>
     <item>
      <widget class="QLabel" name="label_2">
