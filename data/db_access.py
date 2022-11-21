@@ -64,7 +64,7 @@ class DbManager:
             )
 
     @log_try_exc_deco("execute db query to create new user")
-    def create_user(self, user: User) -> None:
+    def create_user(self, user: User) -> User:
         """Ejecuta la Query necesaria para la creación de un usuario.
 
         Args:
@@ -83,6 +83,24 @@ class DbManager:
                     'user_paswd': user.password
                 }
             )
+
+        query = self.db.execute(
+            """
+            SELECT
+                user_id, user_name
+            FROM
+                users
+            WHERE
+                user_name = :user_name
+            """,
+            {'user_name': user.user_name}
+        )
+        data = query.fetchone()
+
+        return User(
+            user_id=data[0],
+            user_name=data[1]
+        )
 
     def user_exists_in_db(self, username: str) -> bool:
         """Retorna True si el usuario existe.
