@@ -9,9 +9,8 @@ class LogSubscriber:
 
     Este Subscriber en particular se encarga de informar al server los eventos de login y signup.
     El observer (subscriber) recibe los mensajes del observable (publisher) mediante
-    dos diferentes callables:
-    - inform_login
-    - inform_signup
+    dos diferentes callables: `inform_login` e `inform_signup`
+
     Ambos aceptan un diccionario como argumento mediante el cual se pasa la informacion necesaria
     que luego se envia al server de registro.
     Si el server no se encuentra escuchando eventos el error es ignorado completamente.
@@ -24,6 +23,7 @@ class LogSubscriber:
             host (str): Direccion IP del server
             port (int): Puerto del server
         """
+
         self.host = host
         self.port = port
 
@@ -67,8 +67,6 @@ class Publisher:
     cada subscriptor puede luego subscribirse.
     Cada subscriptor se registra utilizando el método `register`.
     Cuando se quiere informar de un evento, se utiliza el método `dispatch`.
-
-
     """
 
     def __init__(self, events: list) -> None:
@@ -76,16 +74,6 @@ class Publisher:
 
         Args:
             events (list): Lista de eventos para los cuales el publisher ofrece actualizaciones.
-
-        {
-            evento1 : {
-                subscriber1: callable1,
-                subscriber2: callable2
-            },
-            evento2 : {
-                subscriber2: callable3
-            }
-        }
         """
         self.subscribers = {event: {} for event in events}
 
