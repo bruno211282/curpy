@@ -1,6 +1,7 @@
 *.sqlite3
 .vscode/*
 .pytest_cache/*
+__pycache__
 data/__pycache__
 view/__pycache__
 logger/__pycache__
