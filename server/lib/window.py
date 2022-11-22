@@ -1,3 +1,4 @@
+"""Funcionalidades relacionadas a la lógica de control de la ventana principal de la aplicación."""
 import json
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtCore import QThread, Qt
@@ -13,9 +14,11 @@ class LogWindow(QtWidgets.QMainWindow):
         super().__init__()
         uic.loadUi("resource/logwindow.ui", self)
 
-        self.button.clicked.connect(self.toggle_start_stop)
+        self.button.clicked.connect(self._toggle_start_stop)
 
     def start_server(self):
+        """Inicia la ejecucion del thread con el server TCP."""
+
         port = int(self.port_number.text())
         self.sthread = QThread()
         self.server = Server(port)
@@ -29,14 +32,20 @@ class LogWindow(QtWidgets.QMainWindow):
         self.sthread.start()
 
     def process_data(self, data):
-        """
+        """Publica los mensajes recibidos en la ventana principal de la aplicación.
+
+        Args:
+            data (dict): Diccionario con la informacion a publicar. Ej:
+
         data = {
             "type": "login",
             "name": "nombre",
+            "result": "success"
             "when": "2022/11/20"
         }
         """
         data = json.loads(data)
+
         try:
             desc = data['desc']
         except KeyError:
@@ -52,9 +61,11 @@ class LogWindow(QtWidgets.QMainWindow):
                 "error": f"[{data['when']}] -> [Ingreso de usuario erroneo: {desc}"
             }
         }
+
         itm = QtWidgets.QListWidgetItem(
             messages[data["type"]][data["result"]]
         )
+
         if data["result"] == "error":
             itm.setForeground(Qt.red)
 
@@ -64,9 +75,10 @@ class LogWindow(QtWidgets.QMainWindow):
             self.signup_box.addItem(itm)
 
     def stop_server(self):
+        """Finaliza la ejecucion del server."""
         self.sthread.quit()
 
-    def toggle_start_stop(self):
+    def _toggle_start_stop(self):
         if self.button.text() == "Iniciar":
             self.button.setText("Parar")
             self.start_server()

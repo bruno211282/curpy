@@ -1,3 +1,4 @@
+"""Registro de mensajes a un archivo."""
 import logging
 from functools import wraps
 
@@ -10,6 +11,12 @@ logging.basicConfig(
 
 
 def log_try_exc_deco(action=""):
+    """Registra mensajes a un archivo y engloba metodos en try/except.
+
+    Args:
+        action (str, optional): Un mensaje que describa la acción
+        que se esta ejecutando. Por defecto: "".
+    """
     def inner(orig_func):
 
         @wraps(orig_func)

@@ -1,6 +1,4 @@
-"""Script de inicialización de CurPy."""
-# !/usr/bin/env python
-# -*- coding: utf-8 -*-
+"""Punto de entrada a la aplicacion PyNotes!"""
 
 import sys
 

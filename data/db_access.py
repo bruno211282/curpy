@@ -8,7 +8,7 @@ from typing import Union
 
 
 class DbManager:
-    """Administrador de Base de Datos SQL."""
+    """Administrador de Base de Datos SQL para SQLite3."""
 
     def __init__(self):
         """Conecta el objeto 'db' con la DB SQL y crea las tablas."""
@@ -69,6 +69,9 @@ class DbManager:
 
         Args:
             User: Objeto instancia del modelo User.
+
+        Returns:
+            User: Objeto instancia del modelo User recien generado en DB.
         """
         with self.db as query:
             query.execute(
@@ -130,8 +133,7 @@ class DbManager:
         username: str,
         passhash: str
     ) -> Union[User, None]:
-        """Busca un usuario en la base de datos y lo
-        devuelve si el hash de la clave es correcto.
+        """Busca un usuario en la base de datos y lo devuelve si el hash de la clave es correcto.
 
         Args:
             str, username: nombre del usuario a obtener.
